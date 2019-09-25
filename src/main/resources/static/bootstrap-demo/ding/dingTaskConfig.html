@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>叮当猫 - 配置</title>
+
+    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../assets/css/jumbotron-narrow.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="dingTaskList.html">首页</a></li>
+                <li role="presentation"><a href="#">关于</a></li>
+                <li role="presentation"><a href="#">登录</a></li>
+                <!--<li role="presentation"><a href="#">威威猫</a></li>-->
+            </ul>
+        </nav>
+        <h3 class="text-muted">
+            <img src="../../assets/img/phone_cat.png" alt="phone_cat" height="32" width="32">
+            <span>叮当猫</span>
+        </h3>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">配置</div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">任务名称</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="startAt" class="col-sm-2 control-label">开始时间</label>
+                            <div class="col-sm-8">
+                                <input type="time" class="form-control" id="startAt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="endAt" class="col-sm-2 control-label">结束时间</label>
+                            <div class="col-sm-8">
+                                <input type="time" class="form-control" id="endAt">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">重复次数</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="repeat" id="inlineRadio1" value="option1" checked> 一次
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="repeat" id="inlineRadio2" value="option2"> 工作日
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="repeat" id="inlineRadio3" value="option3"> 周五
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否启用</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="isOpen" id="isOpen1" value="1" checked> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="isOpen" id="isOpen2" value="2"> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="manager" class="col-sm-2 control-label">管理人</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="manager">
+                                    <option>威威猫</option>
+                                    <option>叽叽喳</option>
+                                    <option>猪猪侠</option>
+                                    <option>透明人</option>
+                                    <option>小黑</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">报名描述</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" id="description" rows="5">
+晚上需要加班餐的小伙伴开始报名啦~，报名截止时间15:30。
+请点击下方链接报名。
+Start signing up for overtime meals,finish at 15:30
+Please click the link below to apply。</textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-8">
+                            <a class="btn btn-success" href="dingTaskInfo.html" role="button">保存</a>
+                            <a class="btn btn-warning" href="dingTaskInfo.html" role="button">取消</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+</div>
+
+<script src="../../lib/jquery-1.12.4-dist/jquery.min.js"></script>
+<script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>
