@@ -18,8 +18,7 @@
             <ul class="nav nav-pills pull-right">
                 <li role="presentation"><a href="dingTaskList.html">首页</a></li>
                 <li role="presentation"><a href="../common/about.html">关于</a></li>
-                <li role="presentation"><a href="../user/login.html">登录</a></li>
-                <!--<li role="presentation"><a href="#">威威猫</a></li>-->
+                <li role="presentation"><a href="../user/userCenter.html">威威猫</a></li>
             </ul>
         </nav>
         <h3 class="text-muted">
@@ -39,7 +38,7 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">任务名称</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name">
+                                <input type="text" class="form-control" id="name" value="钉钉加班餐">
                             </div>
                         </div>
                         <div class="form-group">
@@ -55,10 +54,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="maxUser" class="col-sm-2 control-label">人数上限</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="maxUser" value="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">重复次数</label>
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="repeat" id="inlineRadio1" value="option1" checked> 一次
+                                    <input type="radio" name="repeat" id="inlineRadio1" value="option1" checked> 一次（今天）
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" name="repeat" id="inlineRadio2" value="option2"> 工作日
@@ -94,11 +99,17 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-2 control-label">报名描述</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="description" rows="5">
+                                <textarea class="form-control" id="description" rows="5" placeholder="发送提醒的内容">
 晚上需要加班餐的小伙伴开始报名啦~，报名截止时间15:30。
 请点击下方链接报名。
 Start signing up for overtime meals,finish at 15:30
 Please click the link below to apply。</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dingUrl" class="col-sm-2 control-label">钉钉地址</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="dingUrl" placeholder="钉钉机器人 webhook 地址，为空时无法发送提醒">
                             </div>
                         </div>
                     </form>
