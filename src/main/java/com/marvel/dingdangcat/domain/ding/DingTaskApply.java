@@ -1,4 +1,4 @@
-package com.marvel.dingdangcat.domain;
+package com.marvel.dingdangcat.domain.ding;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

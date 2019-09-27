@@ -1,6 +1,6 @@
 package com.marvel.dingdangcat.controller.view;
 
-import com.marvel.dingdangcat.domain.DingTask;
+import com.marvel.dingdangcat.domain.ding.DingTask;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
