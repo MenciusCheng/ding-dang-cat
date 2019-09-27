@@ -1,5 +1,8 @@
 package com.marvel.dingdangcat.domain.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
@@ -7,32 +10,46 @@ import java.time.LocalDateTime;
  *
  * Created by Marvel on 2019/9/27.
  */
+@Entity
 public class Account {
 
+    @Id
     private Long id;
+
     /**
      * 账号名称
      */
+    @Column(nullable = false, unique = true)
     private String username;
+
     /**
      * 账号密码
      */
+    @Column(nullable = false)
     private String password;
+
     /**
      * 手机号码
      */
+    @Column(unique = true)
     private String phone;
+
     /**
      * 最近登录时间
      */
+    @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
+
     /**
      * 创建时间
      */
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     /**
      * 更新时间
      */
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public Account() {

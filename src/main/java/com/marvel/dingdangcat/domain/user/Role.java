@@ -1,5 +1,8 @@
 package com.marvel.dingdangcat.domain.user;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
@@ -7,24 +10,34 @@ import java.time.LocalDateTime;
  *
  * Created by Marvel on 2019/9/27.
  */
+@Entity
 public class Role {
 
+    @Id
     private Long id;
+
     /**
      * 角色名称
      */
+    @Column(nullable = false, unique = true)
     private String name;
+
     /**
      * 备注
      */
+    @Column
     private String remark;
+
     /**
      * 创建时间
      */
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     /**
      * 更新时间
      */
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public Role() {
