@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marvel.dingdangcat.mapper.user.PermissionMapper">
+    <resultMap id="permissionMap" type="com.marvel.dingdangcat.domain.user.Permission">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="remark" column="remark" />
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into permission set
+        name = #{name},
+        remark = #{remark}
+    </insert>
+
+    <update id="update">
+        update permission set
+        name = #{name},
+        remark = #{remark}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from permission where id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="permissionMap">
+        select * from permission where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="permissionMap">
+        select * from permission
+    </select>
+
+    <select id="findByRoleId" resultMap="permissionMap">
+        select p.*
+        from permission p
+        join role_permission rp ON rp.permission_id = p.id
+        where rp.role_id = #{roleId}
+    </select>
+</mapper>

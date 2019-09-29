@@ -1,17 +1,22 @@
 package com.marvel.dingdangcat.service;
 
 import com.marvel.dingdangcat.domain.user.Permission;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 /**
  * Created by Marvel on 2019/9/27.
  */
 public interface UserService {
 
-    Permission savePermission(Permission permission);
+    void createPermission(Permission permission);
+
+    void updatePermission(Permission permission);
+
+    void deletePermission(Long id);
 
     Permission findPermissionById(Long id);
 
-    Page<Permission> findAllPermissions(Pageable pageable);
+    List<Permission> findAllPermissions();
+
+    List<Permission> findPermissionsByRoleId(Long roleId);
 }
