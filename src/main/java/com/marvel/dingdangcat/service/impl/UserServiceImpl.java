@@ -14,8 +14,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final PermissionMapper permissionMapper;
+
     @Autowired
-    private PermissionMapper permissionMapper;
+    public UserServiceImpl(PermissionMapper permissionMapper) {
+        this.permissionMapper = permissionMapper;
+    }
 
     @Override
     public void createPermission(Permission permission) {
