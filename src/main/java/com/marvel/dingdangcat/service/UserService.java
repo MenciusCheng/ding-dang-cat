@@ -1,6 +1,9 @@
 package com.marvel.dingdangcat.service;
 
+import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
+import com.marvel.dingdangcat.domain.user.Role;
+
 import java.util.List;
 
 /**
@@ -19,4 +22,20 @@ public interface UserService {
     List<Permission> findAllPermissions();
 
     List<Permission> findPermissionsByRoleId(Long roleId);
+
+    void createRole(Role role);
+
+    void updateRole(Role role);
+
+    void deleteRole(Long id);
+
+    Role findRoleById(Long id);
+
+    List<Role> findAllRoles();
+
+    List<Role> findRolesByRoleId(Long roleId);
+
+    Account findAccountById(Long id);
+
+    List<Account> findAllAccounts();
 }
