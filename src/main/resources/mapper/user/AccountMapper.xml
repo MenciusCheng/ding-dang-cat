@@ -5,10 +5,18 @@
     </resultMap>
 
     <select id="findById" resultMap="BaseResultMap">
-        select * from role where id = #{id}
+        select * from account where id = #{id}
+    </select>
+
+    <select id="findByUsername" resultMap="BaseResultMap">
+        select * from account where username = #{username}
+    </select>
+
+    <select id="findByPhone" resultMap="BaseResultMap">
+        select * from account where phone = #{phone}
     </select>
 
     <select id="findAll" resultMap="BaseResultMap">
-        select * from role
+        select * from account
     </select>
 </mapper>

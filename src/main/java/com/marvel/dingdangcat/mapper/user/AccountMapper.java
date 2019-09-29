@@ -13,5 +13,9 @@ public interface AccountMapper {
 
     Account findById(Long id);
 
+    Account findByUsername(String username);
+
+    Account findByPhone(String phone);
+
     List<Account> findAll();
 }

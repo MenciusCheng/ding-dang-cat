@@ -33,9 +33,13 @@ public interface UserService {
 
     List<Role> findAllRoles();
 
-    List<Role> findRolesByRoleId(Long roleId);
+    List<Role> findRolesByAccountId(Long accountId);
 
     Account findAccountById(Long id);
+
+    Account findAccountByUsername(String username);
+
+    Account findAccountByPhone(String phone);
 
     List<Account> findAllAccounts();
 }

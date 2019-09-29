@@ -88,13 +88,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Role> findRolesByRoleId(Long accountId) {
+    public List<Role> findRolesByAccountId(Long accountId) {
         return roleMapper.findByAccountId(accountId);
     }
 
     @Override
     public Account findAccountById(Long id) {
         return accountMapper.findById(id);
+    }
+
+    @Override
+    public Account findAccountByUsername(String username) {
+        return accountMapper.findByUsername(username);
+    }
+
+    @Override
+    public Account findAccountByPhone(String phone) {
+        return accountMapper.findByPhone(phone);
     }
 
     @Override
