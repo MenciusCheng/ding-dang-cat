@@ -6,8 +6,6 @@
 <#include "../common/nav.ftl">
 
 <div class="container">
-    <div id="usernameAlert" class="alert alert-danger hidden" role="alert">账号名称不能为空</div>
-    <div id="passwordAlert" class="alert alert-danger hidden" role="alert">账号密码不能为空</div>
     <#if errorMessage??>
         <div id="passwordAlert" class="alert alert-danger" role="alert">${errorMessage}</div>
     </#if>
@@ -17,13 +15,13 @@
                 <div class="panel-heading">欢迎登录</div>
                 <div class="panel-body">
                     <form id="loginForm" class="form-horizontal" action="/user/login" method="post">
-                        <div class="form-group">
+                        <div id="usernameGroup" class="form-group">
                             <label for="username" class="col-sm-2 control-label">账号名称</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="username" name="username">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div id="passwordGroup" class="form-group">
                             <label for="password" class="col-sm-2 control-label">账号密码</label>
                             <div class="col-sm-8">
                                 <input type="password" class="form-control" id="password" name="password">
@@ -45,23 +43,44 @@
 
 <script>
     $(function () {
+        $("#username").on('input propertychange', function () {
+            if ($("#username").val()) {
+                $("#usernameGroup").removeClass("has-error");
+            } else {
+                $("#usernameGroup").addClass("has-error");
+            }
+        });
+        $("#password").on('input propertychange', function () {
+            if ($("#password").val()) {
+                $("#passwordGroup").removeClass("has-error");
+            } else {
+                $("#passwordGroup").addClass("has-error");
+            }
+        });
         $("#loginButton").click(function () {
-            if (validateLoginForm()) {
-                var password = $("#password").val();
-                $("#password").val(md5(password));
-                $("#loginForm").submit();
+            login();
+        });
+        $("#loginForm").keydown(function (event) {
+            if (event.key === "Enter") {
+                login();
             }
         })
     });
 
+    function login() {
+        if (validateLoginForm()) {
+            var password = $("#password").val();
+            $("#password").val(md5(password));
+            $("#loginForm").submit();
+        }
+    }
+
     function validateLoginForm() {
         var validated = true;
         if (!$("#username").val()) {
-            $("#usernameAlert").removeClass("hidden");
             validated = false;
         }
         if (!$("#password").val()) {
-            $("#passwordAlert").removeClass("hidden");
             validated = false;
         }
         return validated;
