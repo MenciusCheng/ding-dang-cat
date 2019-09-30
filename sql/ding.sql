@@ -26,7 +26,8 @@ CREATE TABLE `ding_task_apply` (
   `completed` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否完成，0: 否; 1: 是;',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_ding_task_id_apply_date` (`ding_task_id`,`apply_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='钉钉报名任务申请表';
 
 CREATE TABLE `ding_task_apply_staff` (
@@ -37,5 +38,6 @@ CREATE TABLE `ding_task_apply_staff` (
   `cancelled` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否取消，0: 否; 1: 是;',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_ding_task_apply_id_staff_id` (`ding_task_apply_id`,`staff_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='钉钉报名任务申请人员表';

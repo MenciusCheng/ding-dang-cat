@@ -48,7 +48,7 @@ public class DingTask {
     /**
      * 管理人员 ID
      */
-    private Integer managerId;
+    private Long managerId;
 
     /**
      * 报名描述，长度在 [0, 140]
@@ -76,9 +76,9 @@ public class DingTask {
     /**
      * 创建人
      */
-    private Integer createdBy;
+    private Long createdBy;
     /**
      * 更新人
      */
-    private Integer updatedBy;
+    private Long updatedBy;
 }

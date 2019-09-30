@@ -21,11 +21,11 @@
         where id = #{id}
     </update>
 
-    <delete id="complete">
+    <update id="complete">
         update ding_task_apply set
         `completed` = 1
         where id = #{id}
-    </delete>
+    </update>
 
     <select id="findById" resultMap="BaseResultMap">
         select * from ding_task_apply where id = #{id}

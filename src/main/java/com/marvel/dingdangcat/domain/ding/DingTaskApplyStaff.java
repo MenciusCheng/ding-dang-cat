@@ -22,7 +22,7 @@ public class DingTaskApplyStaff {
     /**
      * 申请人 ID
      */
-    private Integer staffId;
+    private Long staffId;
 
     /**
      * 备注

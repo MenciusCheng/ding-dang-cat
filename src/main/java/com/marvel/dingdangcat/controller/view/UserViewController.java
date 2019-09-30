@@ -29,16 +29,14 @@ public class UserViewController {
      * 登录
      */
     @PostMapping("/login")
-    public String login(ModelMap modelMap, String username, String password) {
+    public String login(String username, String password) {
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 在认证提交前准备 token（令牌）
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
         // 执行认证登陆
         subject.login(token);
-        // 账号信息
-        modelMap.addAttribute("account", userService.findAccountByUsername(username));
-        return "redirect:/user/userCenter";
+        return "redirect:/ding/dingTask/all";
     }
 
     /**

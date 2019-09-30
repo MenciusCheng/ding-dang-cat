@@ -17,6 +17,8 @@ public interface UserService {
 
     LoginInfoVo addLoginInfo(ModelMap modelMap);
 
+    LoginInfoVo findCurrentLoginInfo();
+
     void createPermission(Permission permission);
 
     void updatePermission(Permission permission);

@@ -35,9 +35,11 @@
         where id = #{id}
     </update>
 
-    <delete id="delete">
-        delete from ding_task where id = #{id}
-    </delete>
+    <update id="delete">
+        update ding_task set
+        `deleted` = 1
+        where id = #{id}
+    </update>
 
     <select id="findById" resultMap="BaseResultMap">
         select * from ding_task where id = #{id}

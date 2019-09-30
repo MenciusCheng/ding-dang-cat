@@ -10,7 +10,44 @@
             <div class="panel panel-info">
                 <div class="panel-heading">钉钉报名任务</div>
                 <div class="list-group">
-                    <a class="list-group-item" href="/ding/dingTask/info?id=1">
+                    <#list dingTaskList as item>
+                        <a class="list-group-item" href="/ding/dingTask/info?dingTaskId=${item.id}">
+                            <h4 class="list-group-item-heading">
+                                ${item.name}
+                                <span class="label label-success">
+                                    <#if item.enabled == 0>未启用<#else>已启用</#if>
+                                </span>
+                                <span class="label label-success">
+                                    <#if item.applyStatus == 1>
+                                        未开始
+                                    <#elseif item.applyStatus == 2>
+                                        进行中
+                                    <#elseif item.applyStatus == 3>
+                                        已结束
+                                    <#elseif item.applyStatus == 4>
+                                        已停止
+                                    </#if>
+                                </span>
+                            </h4>
+                            <p class="list-group-item-text">
+                                <span>时间：<span>${item.startAt} ~ ${item.endAt}</span></span>
+                                <span>|</span>
+                                <span>重复：
+                                    <span>
+                                        <#if item.repeatType == 1>
+                                        一次
+                                        <#elseif item.repeatType == 2>
+                                        工作日
+                                        <#elseif item.repeatType == 3>
+                                        每周五
+                                        </#if>
+                                    </span>
+                                </span>
+                            </p>
+                        </a>
+                    </#list>
+
+                    <a class="list-group-item" href="/ding/dingTask/info?dingTaskId=1">
                         <h4 class="list-group-item-heading">钉钉加班餐 <span class="label label-success">已启用</span> <span class="label label-success">进行中</span></h4>
                         <p class="list-group-item-text">
                             <span>时间：<span>12:00 ~ 16:00</span></span>
@@ -18,7 +55,7 @@
                             <span>重复：<span>工作日</span></span>
                         </p>
                     </a>
-                    <a class="list-group-item" href="/ding/dingTask/info?id=2">
+                    <a class="list-group-item" href="/ding/dingTask/info?dingTaskId=2">
                         <h4 class="list-group-item-heading">水果下午茶 <span class="label label-default">未启用</span> <span class="label label-default">已停止</span></h4>
                         <p class="list-group-item-text">
                             <span>时间：<span>12:00 ~ 16:00</span></span>

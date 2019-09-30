@@ -21,11 +21,17 @@
         where id = #{id}
     </update>
 
-    <delete id="cancel">
+    <update id="cancel">
         update ding_task_apply_staff set
         `cancelled` = 1
         where id = #{id}
-    </delete>
+    </update>
+
+    <update id="uncancel">
+        update ding_task_apply_staff set
+        `cancelled` = 0
+        where id = #{id}
+    </update>
 
     <select id="findById" resultMap="BaseResultMap">
         select * from ding_task_apply_staff where id = #{id}
@@ -33,5 +39,9 @@
 
     <select id="findByDingTaskApplyId" resultMap="BaseResultMap">
         select * from ding_task_apply_staff where `cancelled` = 0 AND `ding_task_apply_id` = #{dingTaskApplyId}
+    </select>
+
+    <select id="findByDingTaskApplyIdAndStaffId" resultMap="BaseResultMap">
+        select * from ding_task_apply_staff where `ding_task_apply_id` = #{dingTaskApplyId} AND `staff_id` = #{staffId}
     </select>
 </mapper>

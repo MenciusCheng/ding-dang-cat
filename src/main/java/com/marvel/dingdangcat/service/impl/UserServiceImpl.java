@@ -64,11 +64,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginInfoVo addLoginInfo(ModelMap modelMap) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
-        LoginInfoVo loginInfo = findLoginInfoByUsername(username);
+        LoginInfoVo loginInfo = findCurrentLoginInfo();
         // 账号信息
         modelMap.addAttribute("account", loginInfo);
         return loginInfo;
+    }
+
+    @Override
+    public LoginInfoVo findCurrentLoginInfo() {
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        return findLoginInfoByUsername(username);
     }
 
     @Override
