@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.marvel.dingdangcat.mapper.user.AccountMapper">
+<mapper namespace="com.marvel.dingdangcat.mapper.ding.DingTaskApplyStaffMapper">
     <resultMap id="BaseResultMap" type="com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff">
     </resultMap>
 
@@ -32,6 +32,6 @@
     </select>
 
     <select id="findByDingTaskApplyId" resultMap="BaseResultMap">
-        select * from ding_task_apply_staff where `ding_task_apply_id` = #{dingTaskApplyId}
+        select * from ding_task_apply_staff where `cancelled` = 0 AND `ding_task_apply_id` = #{dingTaskApplyId}
     </select>
 </mapper>
