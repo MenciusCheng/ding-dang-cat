@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marvel.dingdangcat.mapper.user.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff">
+    </resultMap>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into ding_task_apply_staff set
+        `ding_task_apply_id` = #{dingTaskApplyId},
+        `staff_id` = #{staffId},
+        `remark` = #{remark},
+        `cancelled` = #{cancelled}
+    </insert>
+
+    <update id="update">
+        update ding_task_apply_staff set
+        `ding_task_apply_id` = #{dingTaskApplyId},
+        `staff_id` = #{staffId},
+        `remark` = #{remark},
+        `cancelled` = #{cancelled}
+        where id = #{id}
+    </update>
+
+    <delete id="cancel">
+        update ding_task_apply_staff set
+        `cancelled` = 1
+        where id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select * from ding_task_apply_staff where id = #{id}
+    </select>
+
+    <select id="findByDingTaskApplyId" resultMap="BaseResultMap">
+        select * from ding_task_apply_staff where `ding_task_apply_id` = #{dingTaskApplyId}
+    </select>
+</mapper>

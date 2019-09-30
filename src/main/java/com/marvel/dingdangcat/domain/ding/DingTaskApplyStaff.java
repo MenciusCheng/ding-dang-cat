@@ -1,5 +1,7 @@
 package com.marvel.dingdangcat.domain.ding;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 /**
@@ -7,6 +9,7 @@ import java.time.LocalDateTime;
  *
  * Created by Marvel on 2019/9/26.
  */
+@Data
 public class DingTaskApplyStaff {
 
     private Long id;
@@ -34,63 +37,4 @@ public class DingTaskApplyStaff {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
-    public DingTaskApplyStaff() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getDingTaskApplyId() {
-        return dingTaskApplyId;
-    }
-
-    public void setDingTaskApplyId(Long dingTaskApplyId) {
-        this.dingTaskApplyId = dingTaskApplyId;
-    }
-
-    public Integer getStaffId() {
-        return staffId;
-    }
-
-    public void setStaffId(Integer staffId) {
-        this.staffId = staffId;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(Integer cancelled) {
-        this.cancelled = cancelled;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

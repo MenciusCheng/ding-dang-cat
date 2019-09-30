@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marvel.dingdangcat.mapper.user.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.marvel.dingdangcat.domain.ding.DingTask">
+    </resultMap>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into ding_task set
+        `name` = #{name},
+        `start_at` = #{startAt},
+        `end_at` = #{endAt},
+        `max_count` = #{maxCount},
+        `repeat_type` = #{repeatType},
+        `enabled` = #{enabled},
+        `apply_status` = #{applyStatus},
+        `manager_id` = #{managerId},
+        `description` = #{description},
+        `ding_webhook` = #{dingWebhook},
+        `deleted` = #{deleted}
+    </insert>
+
+    <update id="update">
+        update ding_task set
+        `name` = #{name},
+        `start_at` = #{startAt},
+        `end_at` = #{endAt},
+        `max_count` = #{maxCount},
+        `repeat_type` = #{repeatType},
+        `enabled` = #{enabled},
+        `apply_status` = #{applyStatus},
+        `manager_id` = #{managerId},
+        `description` = #{description},
+        `ding_webhook` = #{dingWebhook},
+        `deleted` = #{deleted}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from ding_task where id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select * from ding_task where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select * from ding_task
+    </select>
+</mapper>

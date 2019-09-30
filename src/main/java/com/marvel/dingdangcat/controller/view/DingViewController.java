@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/ding")
-public class DingController {
+public class DingViewController {
 
     @GetMapping("/dingTask/{id}/config")
     public String findDingTaskConfigById(ModelMap modelMap, @PathVariable Long id) {

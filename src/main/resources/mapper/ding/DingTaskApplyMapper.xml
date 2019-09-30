@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marvel.dingdangcat.mapper.user.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.marvel.dingdangcat.domain.ding.DingTaskApply">
+    </resultMap>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        insert into ding_task_apply set
+        `ding_task_id` = #{dingTaskId},
+        `ding_task_name` = #{dingTaskName},
+        `apply_date` = #{applyDate},
+        `completed` = #{completed}
+    </insert>
+
+    <update id="update">
+        update ding_task_apply set
+        `ding_task_id` = #{dingTaskId},
+        `ding_task_name` = #{dingTaskName},
+        `apply_date` = #{applyDate},
+        `completed` = #{completed}
+        where id = #{id}
+    </update>
+
+    <delete id="complete">
+        update ding_task_apply set
+        `completed` = 1
+        where id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select * from ding_task_apply where id = #{id}
+    </select>
+
+    <select id="findByDingTaskIdAndApplyDate" resultMap="BaseResultMap">
+        select * from ding_task_apply where `ding_task_id` = #{dingTaskId} AND `apply_date` = #{applyDate}
+    </select>
+</mapper>

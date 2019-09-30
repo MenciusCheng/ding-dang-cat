@@ -1,5 +1,7 @@
 package com.marvel.dingdangcat.domain.ding;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -8,6 +10,7 @@ import java.time.LocalTime;
  *
  * Created by Marvel on 2019/9/24.
  */
+@Data
 public class DingTask {
 
     private Long id;
@@ -78,135 +81,4 @@ public class DingTask {
      * 更新人
      */
     private Integer updatedBy;
-
-    public DingTask() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalTime getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(LocalTime startAt) {
-        this.startAt = startAt;
-    }
-
-    public LocalTime getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(LocalTime endAt) {
-        this.endAt = endAt;
-    }
-
-    public Integer getMaxCount() {
-        return maxCount;
-    }
-
-    public void setMaxCount(Integer maxCount) {
-        this.maxCount = maxCount;
-    }
-
-    public Integer getRepeatType() {
-        return repeatType;
-    }
-
-    public void setRepeatType(Integer repeatType) {
-        this.repeatType = repeatType;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
-    public Integer getApplyStatus() {
-        return applyStatus;
-    }
-
-    public void setApplyStatus(Integer applyStatus) {
-        this.applyStatus = applyStatus;
-    }
-
-    public Integer getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDingWebhook() {
-        return dingWebhook;
-    }
-
-    public void setDingWebhook(String dingWebhook) {
-        this.dingWebhook = dingWebhook;
-    }
-
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Integer getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
-    }
 }
