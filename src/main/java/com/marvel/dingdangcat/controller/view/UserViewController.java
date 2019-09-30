@@ -33,7 +33,7 @@ public class UserViewController {
         // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 在认证提交前准备 token（令牌）
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
         // 执行认证登陆
         subject.login(token);
         // 账号信息

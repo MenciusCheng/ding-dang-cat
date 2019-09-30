@@ -28,7 +28,7 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <a id="logoutButton" class="btn btn-warning" href="#" role="button">退出登录</a>
+                            <a id="logoutButton" class="btn btn-warning" href="javascript:void(0)" role="button">退出登录</a>
                         </div>
                     </div>
                 </div>

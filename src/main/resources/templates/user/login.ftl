@@ -32,7 +32,7 @@
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <a id="loginButton" class="btn btn-success" href="#" role="button">登录</a>
+                            <a id="loginButton" class="btn btn-success" href="javascript:void(0)" role="button">登录</a>
                         </div>
                     </div>
                 </div>
