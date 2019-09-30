@@ -3,6 +3,7 @@ package com.marvel.dingdangcat.config;
 import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
 import com.marvel.dingdangcat.domain.user.Role;
+import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.mapper.user.AccountMapper;
 import com.marvel.dingdangcat.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -62,19 +63,11 @@ public class CustomRealm extends AuthorizingRealm {
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
-        Account account = userService.findAccountByUsername(username);
-        List<Role> roles = userService.findRolesByAccountId(account.getId());
-        Set<String> stringRoles = roles.stream().map(Role::getName).collect(Collectors.toSet());
-
-        Set<Permission> permissions = new HashSet<>();
-        for (Role r : roles) {
-            List<Permission> ps = userService.findPermissionsByRoleId(r.getId());
-            permissions.addAll(ps);
+        LoginInfoVo loginInfo = userService.findLoginInfoByUsername(username);
+        if (loginInfo != null) {
+            info.setRoles(loginInfo.getRoles());
+            info.setStringPermissions(loginInfo.getPermissions());
         }
-        Set<String> stringPermissions = permissions.stream().map(Permission::getName).collect(Collectors.toSet());
-
-        info.setRoles(stringRoles);
-        info.setStringPermissions(stringPermissions);
         return info;
     }
 }

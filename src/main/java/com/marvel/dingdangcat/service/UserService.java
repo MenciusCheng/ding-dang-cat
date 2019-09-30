@@ -3,6 +3,8 @@ package com.marvel.dingdangcat.service;
 import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
 import com.marvel.dingdangcat.domain.user.Role;
+import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
@@ -10,6 +12,10 @@ import java.util.List;
  * Created by Marvel on 2019/9/27.
  */
 public interface UserService {
+
+    LoginInfoVo findLoginInfoByUsername(String username);
+
+    LoginInfoVo addLoginInfo(ModelMap modelMap);
 
     void createPermission(Permission permission);
 

@@ -55,7 +55,10 @@ public class UserViewController {
      * 欢迎登录页
      */
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(ModelMap modelMap) {
+        modelMap.addAttribute("title", "欢迎登录");
+        modelMap.addAttribute("page", "login");
+        userService.addLoginInfo(modelMap);
         return "user/login";
     }
 
@@ -64,9 +67,19 @@ public class UserViewController {
      */
     @GetMapping("/userCenter")
     public String userCenterPage(ModelMap modelMap) {
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
-        // 账号信息
-        modelMap.addAttribute("account", userService.findAccountByUsername(username));
+        modelMap.addAttribute("title", "个人中心");
+        modelMap.addAttribute("page", "login");
+        userService.addLoginInfo(modelMap);
         return "user/userCenter";
+    }
+
+    /**
+     * 无权限提示页
+     */
+    @GetMapping("/unauthorized")
+    public String unauthorizedPage(ModelMap modelMap) {
+        modelMap.addAttribute("title", "403");
+        userService.addLoginInfo(modelMap);
+        return "user/unauthorized";
     }
 }

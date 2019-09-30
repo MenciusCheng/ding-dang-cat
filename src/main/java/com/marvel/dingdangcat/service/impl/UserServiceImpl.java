@@ -3,14 +3,20 @@ package com.marvel.dingdangcat.service.impl;
 import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
 import com.marvel.dingdangcat.domain.user.Role;
+import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.mapper.user.AccountMapper;
 import com.marvel.dingdangcat.mapper.user.PermissionMapper;
 import com.marvel.dingdangcat.mapper.user.RoleMapper;
 import com.marvel.dingdangcat.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marvel on 2019/9/27.
@@ -30,6 +36,39 @@ public class UserServiceImpl implements UserService {
         this.permissionMapper = permissionMapper;
         this.roleMapper = roleMapper;
         this.accountMapper = accountMapper;
+    }
+
+    @Override
+    public LoginInfoVo findLoginInfoByUsername(String username) {
+        Account account = accountMapper.findByUsername(username);
+        if (account == null) {
+            return null;
+        }
+        List<Role> roles = roleMapper.findByAccountId(account.getId());
+        Set<String> stringRoles = roles.stream().map(Role::getName).collect(Collectors.toSet());
+        Set<Permission> permissions = new HashSet<>();
+        for (Role r : roles) {
+            List<Permission> ps = permissionMapper.findByRoleId(r.getId());
+            permissions.addAll(ps);
+        }
+        Set<String> stringPermissions = permissions.stream().map(Permission::getName).collect(Collectors.toSet());
+
+        LoginInfoVo loginInfoVo = new LoginInfoVo();
+        loginInfoVo.setId(account.getId());
+        loginInfoVo.setUsername(account.getUsername());
+        loginInfoVo.setPhone(account.getPhone());
+        loginInfoVo.setRoles(stringRoles);
+        loginInfoVo.setPermissions(stringPermissions);
+        return loginInfoVo;
+    }
+
+    @Override
+    public LoginInfoVo addLoginInfo(ModelMap modelMap) {
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        LoginInfoVo loginInfo = findLoginInfoByUsername(username);
+        // 账号信息
+        modelMap.addAttribute("account", loginInfo);
+        return loginInfo;
     }
 
     @Override

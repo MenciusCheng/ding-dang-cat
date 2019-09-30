@@ -1,32 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>叮当猫 - 个人中心</title>
-
-    <link href="../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="../../assets/css/jumbotron-narrow.css" rel="stylesheet">
-</head>
+<#include "../common/head.ftl">
 <body>
-
-<div class="container">
-    <div class="header clearfix">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation"><a href="../ding/dingTaskList.html">首页</a></li>
-                <li role="presentation"><a href="../common/about.html">关于</a></li>
-                <li role="presentation" class="active"><a href="userCenter.html">${account.username}</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">
-            <img src="../../assets/img/phone_cat.png" alt="phone_cat" height="32" width="32">
-            <span>叮当猫</span>
-        </h3>
-    </div>
-</div>
+<#include "../common/nav.ftl">
 
 <div class="container">
     <div class="row">
@@ -62,9 +38,6 @@
 </div>
 
 <form id="logoutForm" class="hidden" action="/user/logout" method="post"></form>
-
-<script src="../../lib/jquery-1.12.4-dist/jquery.min.js"></script>
-<script src="../../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
 <script>
     $(function () {

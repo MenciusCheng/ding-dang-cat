@@ -45,7 +45,7 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/admin/**", "roles[admin]");
 //        //开放登陆接口
 //        filterChainDefinitionMap.put("/login", "anon");
-        //其余接口一律拦截
+        filterChainDefinitionMap.put("/user/userCenter", "authc");
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
         filterChainDefinitionMap.put("/**", "anon");
 
