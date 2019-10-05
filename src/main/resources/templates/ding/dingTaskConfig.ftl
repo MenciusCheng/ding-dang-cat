@@ -93,8 +93,8 @@ Please click the link below to apply。</textarea>
                 <div class="panel-footer">
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-8">
-                            <a class="btn btn-success" href="/ding/dingTask/info?id=1" role="button">保存</a>
-                            <a class="btn btn-warning" href="/ding/dingTask/info?id=1" role="button">取消</a>
+                            <a class="btn btn-success" href="<#if dingTask??>/ding/dingTask/info?id=${dingTask.getId()}<#else>/ding/dingTask/all</#if>" role="button">保存</a>
+                            <a class="btn btn-warning" href="<#if dingTask??>/ding/dingTask/info?id=${dingTask.getId()}<#else>/ding/dingTask/all</#if>" role="button">取消</a>
                         </div>
                     </div>
                 </div>

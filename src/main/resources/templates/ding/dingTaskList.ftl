@@ -8,7 +8,10 @@
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <div class="panel panel-info">
-                <div class="panel-heading">钉钉报名任务</div>
+                <div class="panel-heading">
+                    <span>钉钉报名任务</span>
+                    <a class="pull-right" href="/ding/dingTask/config" role="button">发布任务</a>
+                </div>
                 <div class="list-group">
                     <#list dingTaskList as item>
                         <a class="list-group-item" href="/ding/dingTask/info?dingTaskId=${item.id}">
