@@ -11,33 +11,15 @@
                 <div class="panel-heading">钉钉报名任务</div>
                 <div class="panel-body">
                     <h4>
-                        ${dingTask.name}
-                        <span class="label label-success">
-                            <#if dingTask.enabled == 0>未启用<#else>已启用</#if>
-                        </span>
-                        <span class="label label-success">
-                            <#if dingTask.applyStatus == 1>
-                                未开始
-                            <#elseif dingTask.applyStatus == 2>
-                                进行中
-                            <#elseif dingTask.applyStatus == 3>
-                                已结束
-                            <#elseif dingTask.applyStatus == 4>
-                                已停止
-                            </#if>
-                        </span>
+                        <span>${dingTask.name}</span>
+                        <span class="label label-success"><#if dingTask.enabled == 0>未启用<#else>已启用</#if></span>
+                        <span class="label label-success"><#if dingTask.applyStatus == 1>未开始<#elseif dingTask.applyStatus == 2>进行中<#elseif dingTask.applyStatus == 3>已结束<#elseif dingTask.applyStatus == 4>已停止</#if></span>
                     </h4>
                     <p><strong>报名时间：</strong>${dingTask.startAt} ~ ${dingTask.endAt}</p>
                     <p><strong>人数上限：</strong>${dingTask.maxCount}</p>
                     <p>
                         <strong>重复次数：</strong>
-                        <#if dingTask.repeatType == 1>
-                            一次
-                        <#elseif dingTask.repeatType == 2>
-                            工作日
-                        <#elseif dingTask.repeatType == 3>
-                            每周五
-                        </#if>
+                        <span><#if dingTask.repeatType == 1>一次<#elseif dingTask.repeatType == 2>工作日<#elseif dingTask.repeatType == 3>每周五</#if></span>
                     </p>
                     <p><strong>管理人员：</strong>${dingTask.managerId}</p>
                     <pre>${dingTask.description}</pre>

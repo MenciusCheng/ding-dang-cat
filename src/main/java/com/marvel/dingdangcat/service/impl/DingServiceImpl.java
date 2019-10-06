@@ -46,6 +46,8 @@ public class DingServiceImpl implements DingService {
         if (dingTask.getId() != null && dingTask.getId() > 0) {
             dingTaskMapper.update(dingTask);
         } else {
+            dingTask.setApplyStatus(DingTaskApplyStatusEnum.NOT_STARTED.getValue());
+            dingTask.setDeleted(0);
             dingTaskMapper.create(dingTask);
         }
     }

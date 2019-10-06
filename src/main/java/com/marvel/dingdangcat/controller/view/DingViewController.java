@@ -5,6 +5,8 @@ import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +23,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/ding")
 public class DingViewController {
+
+    private final Logger logger = LoggerFactory.getLogger(DingViewController.class);
 
     private final UserService userService;
     private final DingService dingService;
@@ -49,7 +53,7 @@ public class DingViewController {
      * 钉钉报名任务信息页
      */
     @GetMapping("/dingTask/info")
-    public String findDingTaskByIdPage(ModelMap modelMap, Long dingTaskId) {
+    public String findDingTaskByIdPage(ModelMap modelMap, @RequestParam Long dingTaskId) {
         DingTask dingTask = dingService.findDingTaskById(dingTaskId);
         modelMap.addAttribute("dingTask", dingTask);
         List<DingTaskApplyStaff> applyStaffList = dingService.findDingTaskApplyStaffByDingTaskId(dingTaskId);
