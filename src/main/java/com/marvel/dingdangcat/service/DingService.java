@@ -19,6 +19,8 @@ public interface DingService {
 
     List<DingTask> findAllDingTask();
 
+    List<DingTask> findEnabledDingTasks();
+
     void applyDingTask(ApplyDingTaskVo applyDingTaskVo);
 
     void cancelApplyDingTask(Long dingTaskId);

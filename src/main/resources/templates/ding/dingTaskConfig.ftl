@@ -17,25 +17,25 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">任务名称</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name" value="钉钉加班餐">
+                                <input type="text" class="form-control" id="name" name="name" value="${dingTask.name}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="startAt" class="col-sm-2 control-label">开始时间</label>
                             <div class="col-sm-8">
-                                <input type="time" class="form-control" id="startAt" name="startAt">
+                                <input type="time" class="form-control" id="startAt" name="startAt" value="${dingTask.startAt}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="endAt" class="col-sm-2 control-label">结束时间</label>
                             <div class="col-sm-8">
-                                <input type="time" class="form-control" id="endAt" name="endAt">
+                                <input type="time" class="form-control" id="endAt" name="endAt" value="${dingTask.endAt}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="maxCount" class="col-sm-2 control-label">人数上限</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="maxCount" name="maxCount" value="50">
+                                <input type="number" class="form-control" id="maxCount" name="maxCount" value="${dingTask.maxCount}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,17 +78,13 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-2 control-label">报名描述</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="description" name="description" rows="5" placeholder="发送提醒的内容">
-晚上需要加班餐的小伙伴开始报名啦~，报名截止时间15:30。
-请点击下方链接报名。
-Start signing up for overtime meals,finish at 15:30
-Please click the link below to apply。</textarea>
+                                <textarea class="form-control" id="description" name="description" rows="5" placeholder="发送提醒的内容">${dingTask.description}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dingWebhook" class="col-sm-2 control-label">钉钉地址</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="dingWebhook" name="dingWebhook" placeholder="钉钉机器人 webhook 地址，为空时无法发送提醒">
+                                <input type="text" class="form-control" id="dingWebhook" name="dingWebhook" placeholder="钉钉机器人 webhook 地址，为空时无法发送提醒" value="${dingTask.dingWebhook}">
                             </div>
                         </div>
                     </form>

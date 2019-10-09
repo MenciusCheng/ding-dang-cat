@@ -48,4 +48,8 @@
     <select id="findAll" resultMap="BaseResultMap">
         select * from ding_task where `deleted` = 0
     </select>
+
+    <select id="findEnabled" resultMap="BaseResultMap">
+        select * from ding_task where `deleted` = 0 AND `enabled` = 1
+    </select>
 </mapper>

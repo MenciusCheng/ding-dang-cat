@@ -68,6 +68,11 @@ public class DingServiceImpl implements DingService {
     }
 
     @Override
+    public List<DingTask> findEnabledDingTasks() {
+        return dingTaskMapper.findEnabled();
+    }
+
+    @Override
     public void applyDingTask(ApplyDingTaskVo applyDingTaskVo) {
         Long dingTaskId = applyDingTaskVo.getDingTaskId();
         DingTask dingTask = dingTaskMapper.findById(dingTaskId);

@@ -20,4 +20,6 @@ public interface DingTaskMapper {
     DingTask findById(Long id);
 
     List<DingTask> findAll();
+
+    List<DingTask> findEnabled();
 }
