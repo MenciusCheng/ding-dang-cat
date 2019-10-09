@@ -102,7 +102,9 @@ public class DingServiceImpl implements DingService {
                 // 取消过报名，修改取消状态
                 dingTaskApplyStaffMapper.uncancel(dingTaskApplyStaff.getId());
             } else {
-                // 不可以重复报名
+                // 更新备注
+                dingTaskApplyStaff.setRemark(applyDingTaskVo.getRemark());
+                dingTaskApplyStaffMapper.update(dingTaskApplyStaff);
             }
         }
     }

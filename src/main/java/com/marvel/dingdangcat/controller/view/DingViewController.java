@@ -3,6 +3,7 @@ package com.marvel.dingdangcat.controller.view;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
+import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
 import org.slf4j.Logger;
@@ -57,7 +58,19 @@ public class DingViewController {
         DingTask dingTask = dingService.findDingTaskById(dingTaskId);
         modelMap.addAttribute("dingTask", dingTask);
         List<DingTaskApplyStaff> applyStaffList = dingService.findDingTaskApplyStaffByDingTaskId(dingTaskId);
+        // 报名人员列表
         modelMap.addAttribute("applyStaffList", applyStaffList);
+
+        LoginInfoVo loginInfo = userService.findCurrentLoginInfo();
+        if (loginInfo != null) {
+            for (DingTaskApplyStaff applyInfo : applyStaffList) {
+                if (applyInfo.getStaffId().equals(loginInfo.getId())) {
+                    // 登录人报名信息
+                    modelMap.addAttribute("myApplyInfo", applyInfo);
+                    break;
+                }
+            }
+        }
 
         modelMap.addAttribute("title", "钉钉加班餐");
         userService.addLoginInfo(modelMap);

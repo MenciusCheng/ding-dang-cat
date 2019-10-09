@@ -17,8 +17,8 @@
                         <a class="list-group-item" href="/ding/dingTask/info?dingTaskId=${item.id}">
                             <h4 class="list-group-item-heading">
                                 <span>${item.name}</span>
-                                <span class="label label-success"><#if item.enabled == 0>未启用<#else>已启用</#if></span>
-                                <span class="label label-success"><#if item.applyStatus == 1>未开始<#elseif item.applyStatus == 2>进行中<#elseif item.applyStatus == 3>已结束<#elseif item.applyStatus == 4>已停止</#if></span>
+                                <#if item.enabled == 0><span class="label label-default">未启用</span><#else><span class="label label-success">已启用</span></#if>
+                                <#if item.applyStatus == 1><span class="label label-default">未开始</span><#elseif item.applyStatus == 2><span class="label label-success">进行中</span><#elseif item.applyStatus == 3><span class="label label-default">已结束</span><#elseif item.applyStatus == 4><span class="label label-default">已停止</span></#if>
                             </h4>
                             <p class="list-group-item-text">
                                 <span>
