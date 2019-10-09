@@ -3,7 +3,7 @@
         <nav>
             <ul class="nav nav-pills pull-right">
                 <li role="presentation" class="<#if page?? && page == "dingTask">active</#if>"><a href="/ding/dingTask/all">首页</a></li>
-                <li role="presentation" class="<#if page?? && page == "about">active</#if>"><a href="/common/about">关于</a></li>
+                <li role="presentation" class="<#if page?? && page == "about">active</#if>"><a href="/about">关于</a></li>
                 <li role="presentation" class="<#if page?? && page == "login">active</#if>">
                     <#if account??>
                         <a href="/user/userCenter">${account.username}</a>

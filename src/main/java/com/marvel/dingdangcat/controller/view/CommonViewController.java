@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Marvel on 2019/9/30.
  */
 @Controller
-@RequestMapping("/common")
 public class CommonViewController {
 
     private final UserService userService;
@@ -19,6 +18,14 @@ public class CommonViewController {
     @Autowired
     public CommonViewController(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * 首页
+     */
+    @GetMapping("/")
+    public String homePage() {
+        return "redirect:/ding/dingTask/all";
     }
 
     /**
