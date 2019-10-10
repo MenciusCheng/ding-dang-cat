@@ -4,6 +4,7 @@ import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
 import org.slf4j.Logger;
@@ -96,9 +97,8 @@ public class DingViewController {
      * 保存钉钉报名任务
      */
     @PostMapping("/dingTask/save")
-    public String saveDingTask(DingTask dingTask) {
-        dingService.saveDingTask(dingTask);
-        return "redirect:/ding/dingTask/info?dingTaskId=" + dingTask.getId();
+    public String saveDingTask(TDingTaskRequest dingTask) {
+        return "redirect:/ding/dingTask/info?dingTaskId=" + dingService.saveDingTask(dingTask);
     }
 
     /**

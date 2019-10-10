@@ -15,8 +15,7 @@
         `apply_status` = #{applyStatus},
         `manager_id` = #{managerId},
         `description` = #{description},
-        `ding_webhook` = #{dingWebhook},
-        `deleted` = #{deleted}
+        `ding_webhook` = #{dingWebhook}
     </insert>
 
     <update id="update">
@@ -30,8 +29,7 @@
         `apply_status` = #{applyStatus},
         `manager_id` = #{managerId},
         `description` = #{description},
-        `ding_webhook` = #{dingWebhook},
-        `deleted` = #{deleted}
+        `ding_webhook` = #{dingWebhook}
         where id = #{id}
     </update>
 
@@ -52,4 +50,18 @@
     <select id="findEnabled" resultMap="BaseResultMap">
         select * from ding_task where `deleted` = 0 AND `enabled` = 1
     </select>
+
+    <update id="updateApplyStatusByIds">
+        update ding_task set
+        `apply_status` = #{applyStatus}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator="," index="i">#{id}</foreach>
+    </update>
+
+    <update id="updateEnabledByIds">
+        update ding_task set
+        `enabled` = #{enabled}
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator="," index="i">#{id}</foreach>
+    </update>
 </mapper>

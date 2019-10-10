@@ -42,13 +42,13 @@
                             <label class="col-sm-2 control-label">重复次数</label>
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="repeatType" id="repeatType1" value="1" checked> 一次（今天）
+                                    <input type="radio" name="repeatType" id="repeatType1" value="1" <#if dingTask.repeatType == 1>checked</#if>> 一次（今天）
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="repeatType" id="repeatType2" value="2"> 工作日
+                                    <input type="radio" name="repeatType" id="repeatType2" value="2" <#if dingTask.repeatType == 2>checked</#if>> 工作日
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="repeatType" id="repeatType3" value="3"> 每周五
+                                    <input type="radio" name="repeatType" id="repeatType3" value="3" <#if dingTask.repeatType == 3>checked</#if>> 每周五
                                 </label>
                             </div>
                         </div>
@@ -56,10 +56,10 @@
                             <label class="col-sm-2 control-label">是否启用</label>
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="enabled" id="enabled1" value="1" checked> 是
+                                    <input type="radio" name="enabled" id="enabled1" value="1" <#if dingTask.enabled == 1>checked</#if>> 是
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="enabled" id="enabled2" value="2"> 否
+                                    <input type="radio" name="enabled" id="enabled2" value="0" <#if dingTask.enabled == 0>checked</#if>> 否
                                 </label>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             <label for="managerId" class="col-sm-2 control-label">管理人员</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="managerId" name="managerId">
-                                    <option value="1">威威猫</option>
+                                    <option value="1" selected>威威猫</option>
                                     <option value="2">叽叽喳</option>
                                     <option value="3">猪猪侠</option>
                                     <option value="4">透明人</option>

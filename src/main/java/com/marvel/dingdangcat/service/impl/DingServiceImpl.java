@@ -6,15 +6,19 @@ import com.marvel.dingdangcat.domain.ding.DingTaskApply;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
+import com.marvel.dingdangcat.helper.DingHelper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyStaffMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskMapper;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,14 +46,19 @@ public class DingServiceImpl implements DingService {
     }
 
     @Override
-    public void saveDingTask(DingTask dingTask) {
+    public Long saveDingTask(TDingTaskRequest dingTaskRequest) {
+        DingTask dingTask = new DingTask();
+        BeanUtils.copyProperties(dingTaskRequest, dingTask);
+
+        Integer applyStatus = DingHelper.calApplyStatus(LocalTime.now(), dingTask);
+        dingTask.setApplyStatus(applyStatus);
+
         if (dingTask.getId() != null && dingTask.getId() > 0) {
             dingTaskMapper.update(dingTask);
         } else {
-            dingTask.setApplyStatus(DingTaskApplyStatusEnum.NOT_STARTED.getValue());
-            dingTask.setDeleted(0);
             dingTaskMapper.create(dingTask);
         }
+        return dingTask.getId();
     }
 
     @Override

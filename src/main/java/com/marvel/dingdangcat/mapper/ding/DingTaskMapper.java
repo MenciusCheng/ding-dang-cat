@@ -1,6 +1,7 @@
 package com.marvel.dingdangcat.mapper.ding;
 
 import com.marvel.dingdangcat.domain.ding.DingTask;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface DingTaskMapper {
     List<DingTask> findAll();
 
     List<DingTask> findEnabled();
+
+    void updateApplyStatusByIds(@Param("ids") List<Long> ids, @Param("applyStatus") Integer applyStatus);
+
+    void updateEnabledByIds(@Param("ids") List<Long> ids, @Param("enabled") Integer enabled);
 }

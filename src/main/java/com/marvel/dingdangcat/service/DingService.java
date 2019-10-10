@@ -3,6 +3,7 @@ package com.marvel.dingdangcat.service;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
+import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface DingService {
 
-    void saveDingTask(DingTask dingTask);
+    Long saveDingTask(TDingTaskRequest dingTask);
 
     void deleteDingTask(Long dingTaskId);
 
