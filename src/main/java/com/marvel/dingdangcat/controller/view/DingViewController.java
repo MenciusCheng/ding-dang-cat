@@ -3,13 +3,12 @@ package com.marvel.dingdangcat.controller.view;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.user.Account;
-import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
-import com.marvel.dingdangcat.domain.view.LoginInfoVo;
-import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
+import com.marvel.dingdangcat.domain.view.*;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Marvel on 2019/9/24.
@@ -57,22 +58,33 @@ public class DingViewController {
      */
     @GetMapping("/dingTask/info")
     public String findDingTaskByIdPage(ModelMap modelMap, @RequestParam Long dingTaskId) {
-        DingTask dingTask = dingService.findDingTaskById(dingTaskId);
-        modelMap.addAttribute("dingTask", dingTask);
-        List<DingTaskApplyStaff> applyStaffList = dingService.findDingTaskApplyStaffByDingTaskId(dingTaskId);
-        // 报名人员列表
-        modelMap.addAttribute("applyStaffList", applyStaffList);
+        Map<Long, String> usernameMap = userService.findAccountUsernameMap();
 
+        DingTask dingTask = dingService.findDingTaskById(dingTaskId);
+        TDingTaskResponse dingTaskResponse = new TDingTaskResponse();
+        BeanUtils.copyProperties(dingTask, dingTaskResponse);
+        dingTaskResponse.setManagerName(usernameMap.getOrDefault(dingTaskResponse.getManagerId(), ""));
+        dingTaskResponse.setCreatedByName(usernameMap.getOrDefault(dingTaskResponse.getCreatedBy(), ""));
+        dingTaskResponse.setUpdatedByName(usernameMap.getOrDefault(dingTaskResponse.getUpdatedBy(), ""));
+        modelMap.addAttribute("dingTask", dingTaskResponse);
+
+        List<DingTaskApplyStaff> applyStaffList = dingService.findDingTaskApplyStaffByDingTaskId(dingTaskId);
+        List<DingTaskApplyStaffVo> applyStaffVofList = new ArrayList<>();
         LoginInfoVo loginInfo = userService.findCurrentLoginInfo();
-        if (loginInfo != null) {
-            for (DingTaskApplyStaff applyInfo : applyStaffList) {
-                if (applyInfo.getStaffId().equals(loginInfo.getId())) {
-                    // 登录人报名信息
-                    modelMap.addAttribute("myApplyInfo", applyInfo);
-                    break;
-                }
+
+        for (DingTaskApplyStaff applyInfo : applyStaffList) {
+            DingTaskApplyStaffVo applyStaffVo = new DingTaskApplyStaffVo();
+            BeanUtils.copyProperties(applyInfo, applyStaffVo);
+            applyStaffVo.setStaffName(usernameMap.getOrDefault(applyStaffVo.getStaffId(), ""));
+
+            if (loginInfo != null && applyInfo.getStaffId().equals(loginInfo.getId())) {
+                // 登录人报名信息
+                modelMap.addAttribute("myApplyInfo", applyStaffVo);
             }
+            applyStaffVofList.add(applyStaffVo);
         }
+        // 报名人员列表
+        modelMap.addAttribute("applyStaffList", applyStaffVofList);
 
         modelMap.addAttribute("title", "钉钉加班餐");
         userService.addLoginInfo(modelMap);

@@ -22,3 +22,7 @@ body {
         max-width: 730px;
     }
 }
+
+.bold {
+    font-weight: bold;
+}

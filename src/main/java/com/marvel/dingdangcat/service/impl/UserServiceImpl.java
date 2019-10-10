@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -154,5 +155,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Account> findAllAccounts() {
         return accountMapper.findAll();
+    }
+
+    @Override
+    public Map<Long, String> findAccountUsernameMap() {
+        return findAllAccounts().stream().collect(Collectors.toMap(Account::getId, Account::getUsername));
     }
 }

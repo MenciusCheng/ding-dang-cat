@@ -7,6 +7,7 @@ import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Marvel on 2019/9/27.
@@ -50,4 +51,6 @@ public interface UserService {
     Account findAccountByPhone(String phone);
 
     List<Account> findAllAccounts();
+
+    Map<Long, String> findAccountUsernameMap();
 }
