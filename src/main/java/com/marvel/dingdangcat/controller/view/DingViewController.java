@@ -2,6 +2,7 @@ package com.marvel.dingdangcat.controller.view;
 
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
+import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
@@ -87,6 +88,9 @@ public class DingViewController {
             DingTask dingTask = dingService.findDingTaskById(dingTaskId);
             modelMap.addAttribute("dingTask", dingTask);
         }
+
+        List<Account> allAccounts = userService.findAllAccounts();
+        modelMap.addAttribute("allAccounts", allAccounts);
 
         modelMap.addAttribute("title", "配置");
         userService.addLoginInfo(modelMap);
