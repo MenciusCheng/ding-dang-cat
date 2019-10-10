@@ -17,7 +17,7 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">任务名称</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="name" name="name" value="<#if dingTask??>${dingTask.name}</#if>">
+                                <input type="text" class="form-control" id="name" name="name" maxlength="60" value="<#if dingTask??>${dingTask.name}</#if>">
                             </div>
                         </div>
                         <div class="form-group">
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for="maxCount" class="col-sm-2 control-label">人数上限</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="maxCount" name="maxCount" value="<#if dingTask??>${dingTask.maxCount}</#if>">
+                                <input type="number" class="form-control" id="maxCount" name="maxCount" maxlength="4" value="<#if dingTask??>${dingTask.maxCount}</#if>">
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,13 +76,13 @@
                         <div class="form-group">
                             <label for="description" class="col-sm-2 control-label">报名描述</label>
                             <div class="col-sm-8">
-                                <textarea class="form-control" id="description" name="description" rows="5" placeholder="发送提醒的内容"><#if dingTask??>${dingTask.description}</#if></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="5" placeholder="发送提醒的内容" maxlength="255"><#if dingTask??>${dingTask.description}</#if></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dingWebhook" class="col-sm-2 control-label">钉钉地址</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="dingWebhook" name="dingWebhook" placeholder="钉钉机器人 webhook 地址，为空时无法发送提醒" value="<#if dingTask??>${dingTask.dingWebhook}</#if>">
+                                <input type="text" class="form-control" id="dingWebhook" name="dingWebhook" placeholder="钉钉机器人 webhook 地址，为空时无法发送提醒" maxlength="255" value="<#if dingTask??>${dingTask.dingWebhook}</#if>">
                             </div>
                         </div>
                     </form>
@@ -138,8 +138,11 @@
         if (!$("#maxCount").val()) {
             message += "<li>人数上限不能为空</li>";
             validated = false;
-        } else if ($("#maxCount").val() <= 0) {
-            message += "<li>人数上限必须大于 0</li>";
+        } else if (!/^[0-9]+$/.test($("#maxCount").val())) {
+            message += "<li>人数上限格式不正确</li>";
+            validated = false;
+        } else if ($("#maxCount").val() < 1 || $("#maxCount").val() > 10000) {
+            message += "<li>人数上限范围不正确</li>";
             validated = false;
         }
         if (!validated) {

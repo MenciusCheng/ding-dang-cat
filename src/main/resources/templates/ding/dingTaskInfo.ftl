@@ -46,7 +46,7 @@
             <form id="applyForm" action="/ding/dingTask/apply" method="post">
                 <input type="hidden" name="dingTaskId" value="${dingTask.id}">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="remark" name="remark" placeholder="填写备注" value="<#if myApplyInfo??>${myApplyInfo.remark}</#if>">
+                    <input type="text" class="form-control" id="remark" name="remark" placeholder="填写备注" maxlength="60" value="<#if myApplyInfo??>${myApplyInfo.remark}</#if>">
                 </div>
             </form>
             <form id="cancelApplyForm" action="/ding/dingTask/cancelApply" method="post" class="hidden">
@@ -57,9 +57,11 @@
     <div class="row">
         <div class="col-xs-12 col-md-12">
             <#if applyStaffList?size == 0>
-                <div class="panel-body">
-                    <p>欢迎报名 ━(*｀∀´*)ノ亻!</p>
-                </div>
+                <#if dingTask.applyStatus == 2>
+                    <div class="panel-body">
+                        <p>欢迎报名 ━(*｀∀´*)ノ亻!</p>
+                    </div>
+                </#if>
             <#else>
                 <div class="panel panel-warning">
                     <div class="panel-heading">报名人员</div>
