@@ -52,10 +52,13 @@ public class DingServiceImpl implements DingService {
 
         Integer applyStatus = DingHelper.calApplyStatus(LocalTime.now(), dingTask);
         dingTask.setApplyStatus(applyStatus);
+        LoginInfoVo currentLoginInfo = userService.findCurrentLoginInfo();
+        dingTask.setUpdatedBy(currentLoginInfo.getId());
 
         if (dingTask.getId() != null && dingTask.getId() > 0) {
             dingTaskMapper.update(dingTask);
         } else {
+            dingTask.setCreatedBy(currentLoginInfo.getId());
             dingTaskMapper.create(dingTask);
         }
         return dingTask.getId();

@@ -22,14 +22,23 @@
                         <span><#if dingTask.repeatType == 1>一次<#elseif dingTask.repeatType == 2>工作日<#elseif dingTask.repeatType == 3>每周五</#if></span>
                     </p>
                     <p><strong>管理人员：</strong>${dingTask.managerId}</p>
+                    <p><strong>发布人员：</strong>${dingTask.createdBy}</p>
                     <pre>${dingTask.description}</pre>
                 </div>
                 <div class="panel-footer">
-                    <a id="applyButton" class="btn btn-success" href="javascript:void(0)" role="button"><#if myApplyInfo??>更新备注<#else>立即报名</#if></a>
-                    <#if myApplyInfo??>
-                        <a id="cancelApplyButton" class="btn btn-warning" href="javascript:void(0)" role="button">取消报名</a>
+                    <#if dingTask.applyStatus == 2>
+                        <#if account??>
+                            <a id="applyButton" class="btn btn-success" href="javascript:void(0)" role="button"><#if myApplyInfo??>更新备注<#else>立即报名</#if></a>
+                            <#if myApplyInfo??>
+                                <a id="cancelApplyButton" class="btn btn-warning" href="javascript:void(0)" role="button">取消报名</a>
+                            </#if>
+                        <#else>
+                            <a class="btn btn-success" href="/user/login" role="button">登录报名</a>
+                        </#if>
                     </#if>
-                    <a class="btn btn-info pull-right" href="/ding/dingTask/config?dingTaskId=${dingTask.getId()}" role="button">配置</a>
+                    <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("配置所有任务") || (account.permissions?seq_contains("配置任务") && (account.id == dingTask.managerId || account.id == dingTask.createdBy)))>
+                        <a class="btn btn-info pull-right" href="/ding/dingTask/config?dingTaskId=${dingTask.getId()}" role="button">配置</a>
+                    </#if>
                 </div>
             </div>
         </div>

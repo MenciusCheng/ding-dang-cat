@@ -10,7 +10,9 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <span>钉钉报名任务</span>
-                    <a class="pull-right" href="/ding/dingTask/config" role="button">发布任务</a>
+                    <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("发布任务"))>
+                        <a class="pull-right" href="/ding/dingTask/config" role="button">发布任务</a>
+                    </#if>
                 </div>
                 <div class="list-group">
                     <#list dingTaskList as item>

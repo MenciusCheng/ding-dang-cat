@@ -15,7 +15,9 @@
         `apply_status` = #{applyStatus},
         `manager_id` = #{managerId},
         `description` = #{description},
-        `ding_webhook` = #{dingWebhook}
+        `ding_webhook` = #{dingWebhook},
+        `created_by` = #{createdBy},
+        `updated_by` = #{updatedBy}
     </insert>
 
     <update id="update">
@@ -29,7 +31,8 @@
         `apply_status` = #{applyStatus},
         `manager_id` = #{managerId},
         `description` = #{description},
-        `ding_webhook` = #{dingWebhook}
+        `ding_webhook` = #{dingWebhook},
+        `updated_by` = #{updatedBy}
         where id = #{id}
     </update>
 
