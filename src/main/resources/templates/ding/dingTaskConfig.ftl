@@ -120,15 +120,15 @@
         if (!$("#startAt").val()) {
             message += "<li>开始时间不能为空</li>";
             validated = false;
-        } else if ($("#startAt").val() <= "00:00") {
-            message += "<li>开始时间必须大于 00:00</li>";
+        } else if ($("#startAt").val() < "06:00") {
+            message += "<li>开始时间必须大于等于 06:00</li>";
             validated = false;
         }
         if (!$("#endAt").val()) {
             message += "<li>结束时间不能为空</li>";
             validated = false;
-        } else if ($("#endAt").val() >= "23:59") {
-            message += "<li>结束时间必须小于 23:59</li>";
+        } else if ($("#endAt").val() > "22:00") {
+            message += "<li>结束时间必须小于等于 22:00</li>";
             validated = false;
         }
         if ($("#startAt").val() && $("#endAt").val() && $("#startAt").val() > $("#endAt").val()) {

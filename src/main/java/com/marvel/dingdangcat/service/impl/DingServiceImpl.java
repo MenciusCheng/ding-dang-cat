@@ -8,11 +8,14 @@ import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
 import com.marvel.dingdangcat.helper.DingHelper;
+import com.marvel.dingdangcat.helper.DingTalkHelper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyStaffMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskMapper;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +24,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Marvel on 2019/9/30.
  */
 @Service
 public class DingServiceImpl implements DingService {
+
+    private final Logger logger = LoggerFactory.getLogger(DingServiceImpl.class);
 
     private final DingTaskMapper dingTaskMapper;
     private final DingTaskApplyMapper dingTaskApplyMapper;
@@ -150,5 +156,38 @@ public class DingServiceImpl implements DingService {
             return dingTaskApplyStaffMapper.findByDingTaskApplyId(dingTaskApply.getId());
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public boolean sendDingTalk(Long dingTaskId) {
+        DingTask dingTask = dingTaskMapper.findById(dingTaskId);
+
+        boolean isNotDoing = dingTask.getApplyStatus() != DingTaskApplyStatusEnum.DOING.getValue();
+        boolean isEmptyDescription = dingTask.getDescription() == null || dingTask.getDescription().length() == 0;
+        boolean isEmptyDingWebhook = dingTask.getDingWebhook() == null || dingTask.getDingWebhook().length() == 0;
+
+        if (isNotDoing || isEmptyDescription || isEmptyDingWebhook) {
+            return false;
+        }
+
+        String domainName = "http://127.0.0.1:9380";
+        String api = "/ding/dingTask/info?dingTaskId=";
+        String url = domainName + api + dingTaskId.toString();
+
+        Map<Long, String> usernameMap = userService.findAccountUsernameMap();
+        List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTaskId);
+        StringBuilder applyStringBuilder = new StringBuilder();
+        applyStringBuilder.append("当前报名人员：\n");
+        for (int i = 0; i < applyStaffList.size(); i++) {
+            String username = usernameMap.getOrDefault(applyStaffList.get(i).getStaffId(), "");
+            applyStringBuilder.append(String.valueOf(i + 1)).append(". ").append(username).append("\n");
+        }
+
+        String message = dingTask.getDescription() + "\n报名链接：" + url + "\n" + applyStringBuilder.toString();
+
+        logger.info("dingWebhook: " + dingTask.getDingWebhook());
+        logger.info("message: " + message);
+        DingTalkHelper.sendText(dingTask.getDingWebhook(), message);
+        return true;
     }
 }

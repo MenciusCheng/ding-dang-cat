@@ -27,4 +27,6 @@ public interface DingService {
     void cancelApplyDingTask(Long dingTaskId);
 
     List<DingTaskApplyStaff> findDingTaskApplyStaffByDingTaskId(Long dingTaskId);
+
+    boolean sendDingTalk(Long dingTaskId);
 }

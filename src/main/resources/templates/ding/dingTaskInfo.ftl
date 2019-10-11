@@ -34,6 +34,9 @@
                     <#else>
                         <a class="btn btn-info" href="/user/login" role="button">登录报名</a>
                     </#if>
+                    <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("提醒所有任务") || (account.permissions?seq_contains("提醒任务") && (account.id == dingTask.managerId || account.id == dingTask.createdBy)))>
+                        <a id="noticeButton" class="btn btn-info" href="javascript:void(0)" role="button">钉钉提醒</a>
+                    </#if>
                     <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("配置所有任务") || (account.permissions?seq_contains("配置任务") && (account.id == dingTask.managerId || account.id == dingTask.createdBy)))>
                         <a class="btn btn-info pull-right" href="/ding/dingTask/config?dingTaskId=${dingTask.getId()}" role="button">配置</a>
                     </#if>
@@ -84,6 +87,20 @@
         <#if myApplyInfo??>
         $("#cancelApplyButton").click(function () {
             $("#cancelApplyForm").submit();
+        });
+        </#if>
+        <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("提醒所有任务") || (account.permissions?seq_contains("提醒任务") && (account.id == dingTask.managerId || account.id == dingTask.createdBy)))>
+        $("#noticeButton").click(function () {
+            $.get({
+                url: "/api/v1/ding/noticeDingTalk?dingTaskId=" + ${dingTask.getId()},
+                success: function (data, textStatus) {
+                    console.log(data);
+                    console.log(textStatus);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    debugger;
+                }
+            });
         });
         </#if>
     });
