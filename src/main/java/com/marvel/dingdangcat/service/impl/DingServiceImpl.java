@@ -137,6 +137,9 @@ public class DingServiceImpl implements DingService {
                 dingTaskApplyStaff.setRemark(applyDingTaskVo.getRemark());
                 dingTaskApplyStaffMapper.update(dingTaskApplyStaff);
             }
+
+            // 发送提醒
+            sendDingTalk(dingTaskId);
         }
     }
 
