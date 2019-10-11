@@ -4,6 +4,7 @@ import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
 import com.marvel.dingdangcat.domain.user.Role;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import com.marvel.dingdangcat.domain.view.TUpdatePasswordRequest;
 import com.marvel.dingdangcat.mapper.user.AccountMapper;
 import com.marvel.dingdangcat.mapper.user.PermissionMapper;
 import com.marvel.dingdangcat.mapper.user.RoleMapper;
@@ -160,5 +161,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<Long, String> findAccountUsernameMap() {
         return findAllAccounts().stream().collect(Collectors.toMap(Account::getId, Account::getUsername));
+    }
+
+    @Override
+    public void updatePassword(TUpdatePasswordRequest request) {
+        accountMapper.updatePassword(request.getId(), request.getNewPassword());
     }
 }

@@ -29,6 +29,7 @@
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-8">
                             <a id="logoutButton" class="btn btn-warning" href="javascript:void(0)" role="button">退出登录</a>
+                            <a class="btn btn-danger" href="/user/updatePassword" role="button">修改密码</a>
                         </div>
                     </div>
                 </div>

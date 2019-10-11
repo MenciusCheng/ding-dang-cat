@@ -1,5 +1,7 @@
 package com.marvel.dingdangcat.controller.view;
 
+import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import com.marvel.dingdangcat.domain.view.TUpdatePasswordRequest;
 import com.marvel.dingdangcat.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -79,5 +81,26 @@ public class UserViewController {
         modelMap.addAttribute("title", "403");
         userService.addLoginInfo(modelMap);
         return "user/unauthorized";
+    }
+
+    /**
+     * 修改密码页
+     */
+    @GetMapping("/updatePassword")
+    public String updatePasswordPage(ModelMap modelMap) {
+        modelMap.addAttribute("title", "修改密码");
+        userService.addLoginInfo(modelMap);
+        return "user/updatePassword";
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("/updatePassword")
+    public String updatePassword(TUpdatePasswordRequest request) {
+        LoginInfoVo loginInfo = userService.findCurrentLoginInfo();
+        request.setId(loginInfo.getId());
+        userService.updatePassword(request);
+        return "redirect:/user/userCenter";
     }
 }

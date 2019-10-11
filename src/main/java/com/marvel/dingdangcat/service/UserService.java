@@ -4,6 +4,7 @@ import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.user.Permission;
 import com.marvel.dingdangcat.domain.user.Role;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
+import com.marvel.dingdangcat.domain.view.TUpdatePasswordRequest;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
@@ -53,4 +54,6 @@ public interface UserService {
     List<Account> findAllAccounts();
 
     Map<Long, String> findAccountUsernameMap();
+
+    void updatePassword(TUpdatePasswordRequest request);
 }
