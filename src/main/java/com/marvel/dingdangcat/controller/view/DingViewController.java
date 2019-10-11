@@ -86,7 +86,7 @@ public class DingViewController {
         // 报名人员列表
         modelMap.addAttribute("applyStaffList", applyStaffVofList);
 
-        modelMap.addAttribute("title", "钉钉加班餐");
+        modelMap.addAttribute("title", dingTask.getName());
         userService.addLoginInfo(modelMap);
         return "ding/dingTaskInfo";
     }
