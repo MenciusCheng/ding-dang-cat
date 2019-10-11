@@ -42,6 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginInfoVo findLoginInfoByUsername(String username) {
+        if (username == null || username.length() == 0) {
+            return null;
+        }
         Account account = accountMapper.findByUsername(username);
         if (account == null) {
             return null;
