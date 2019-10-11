@@ -88,6 +88,10 @@ public class DingTaskScheduler {
         }
         if (!doingDingTaskIds.isEmpty()) {
             dingTaskMapper.updateApplyStatusByIds(doingDingTaskIds, DingTaskApplyStatusEnum.DOING.getValue());
+            // 通过定时器变为进行中时，发送钉钉提醒
+            for (Long dingTaskId : doingDingTaskIds) {
+                dingService.sendDingTalk(dingTaskId);
+            }
         }
         if (!overDingTaskIds.isEmpty()) {
             dingTaskMapper.updateApplyStatusByIds(overDingTaskIds, DingTaskApplyStatusEnum.OVER.getValue());
