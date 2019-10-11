@@ -56,4 +56,6 @@ public interface UserService {
     Map<Long, String> findAccountUsernameMap();
 
     void updatePassword(TUpdatePasswordRequest request);
+
+    void updateLoginAt(Long id);
 }

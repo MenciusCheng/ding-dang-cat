@@ -167,4 +167,9 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(TUpdatePasswordRequest request) {
         accountMapper.updatePassword(request.getId(), request.getNewPassword());
     }
+
+    @Override
+    public void updateLoginAt(Long id) {
+        accountMapper.updateLoginAt(id);
+    }
 }

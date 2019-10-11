@@ -21,4 +21,6 @@ public interface AccountMapper {
     List<Account> findAll();
 
     void updatePassword(@Param("id") Long id, @Param("password") String password);
+
+    void updateLoginAt(Long id);
 }

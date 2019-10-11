@@ -25,4 +25,10 @@
         `password` = #{password}
         where id = #{id}
     </update>
+
+    <update id="updateLoginAt">
+        update account set
+        `last_login_at` = now()
+        where id = #{id}
+    </update>
 </mapper>
