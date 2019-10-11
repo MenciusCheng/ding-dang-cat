@@ -59,19 +59,15 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-12">
-            <#if applyStaffList?size == 0>
-                <#if dingTask.applyStatus == 2>
-                    <div class="panel-body">
-                        <p>欢迎报名 ━(*｀∀´*)ノ亻!</p>
-                    </div>
-                </#if>
-            <#else>
                 <div class="panel panel-warning">
-                    <div class="panel-heading">报名人员</div>
+                    <div class="panel-heading">今日报名人员</div>
                     <div class="list-group">
                         <#list applyStaffList as item>
                             <li class="list-group-item"><span>${item_index + 1}.</span><span class="<#if myApplyInfo?? && item.staffId == myApplyInfo.staffId>bold</#if>">${item.staffName}</span><#if item.remark?length != 0 > <span>备注：${item.remark}</span></#if></li>
                         </#list>
+                        <#if applyStaffList?size == 0>
+                            <li class="list-group-item"><span>暂无人报名</span></li>
+                        <#else>
                     </div>
                 </div>
             </#if>
@@ -94,11 +90,9 @@
             $.get({
                 url: "/api/v1/ding/noticeDingTalk?dingTaskId=" + ${dingTask.getId()},
                 success: function (data, textStatus) {
-                    console.log(data);
-                    console.log(textStatus);
+                    alert(data);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    debugger;
                 }
             });
         });

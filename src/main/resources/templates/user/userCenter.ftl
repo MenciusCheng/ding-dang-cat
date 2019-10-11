@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">手机号码</label>
                             <div class="col-sm-8">
-                                <p class="form-control-static">${account.phone}</p>
+                                <p class="form-control-static"><#if account.phone??>${account.phone}</#if></p>
                             </div>
                         </div>
                     </form>

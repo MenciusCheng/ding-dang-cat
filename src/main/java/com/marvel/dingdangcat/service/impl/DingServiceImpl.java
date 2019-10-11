@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -38,6 +39,9 @@ public class DingServiceImpl implements DingService {
     private final DingTaskApplyMapper dingTaskApplyMapper;
     private final DingTaskApplyStaffMapper dingTaskApplyStaffMapper;
     private final UserService userService;
+
+    @Value("${ding.domain.name}")
+    private String domainName;
 
     @Autowired
     public DingServiceImpl(
@@ -170,24 +174,33 @@ public class DingServiceImpl implements DingService {
             return false;
         }
 
-        String domainName = "http://127.0.0.1:9380";
-        String api = "/ding/dingTask/info?dingTaskId=";
-        String url = domainName + api + dingTaskId.toString();
+        DingTalkHelper.sendText(dingTask.getDingWebhook(), getDingTaskMessage(dingTask));
+        return true;
+    }
 
-        Map<Long, String> usernameMap = userService.findAccountUsernameMap();
-        List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTaskId);
+    private String getDingTaskMessage(DingTask dingTask) {
+        String api = "/ding/dingTask/info?dingTaskId=";
+        String url = domainName + api + dingTask.getId().toString();
+
         StringBuilder applyStringBuilder = new StringBuilder();
-        applyStringBuilder.append("当前报名人员：\n");
-        for (int i = 0; i < applyStaffList.size(); i++) {
-            String username = usernameMap.getOrDefault(applyStaffList.get(i).getStaffId(), "");
-            applyStringBuilder.append(String.valueOf(i + 1)).append(". ").append(username).append("\n");
+        List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTask.getId());
+        if (applyStaffList != null) {
+            Map<Long, String> usernameMap = userService.findAccountUsernameMap();
+            applyStringBuilder.append("当前报名人员：\n");
+            for (int i = 0; i < applyStaffList.size(); i++) {
+                String username = usernameMap.getOrDefault(applyStaffList.get(i).getStaffId(), "");
+                String remark = applyStaffList.get(i).getRemark();
+                if (remark != null && remark.length() > 0) {
+                    remark = " 备注：" + remark;
+                } else {
+                    remark = "";
+                }
+                applyStringBuilder.append(String.valueOf(i + 1)).append(". ").append(username).append(remark).append("\n");
+            }
         }
 
-        String message = dingTask.getDescription() + "\n报名链接：" + url + "\n" + applyStringBuilder.toString();
-
-        logger.info("dingWebhook: " + dingTask.getDingWebhook());
-        logger.info("message: " + message);
-        DingTalkHelper.sendText(dingTask.getDingWebhook(), message);
-        return true;
+        String description = dingTask.getDescription().replaceAll("\r\n", "\n");
+        String message = description + "\n报名链接：" + url + "\n" + applyStringBuilder.toString();
+        return message;
     }
 }
