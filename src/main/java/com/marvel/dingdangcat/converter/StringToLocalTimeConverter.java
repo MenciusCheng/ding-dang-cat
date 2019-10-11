@@ -13,7 +13,7 @@ public class StringToLocalTimeConverter implements Converter<String, LocalTime> 
     private static final Pattern hhmmPattern = Pattern.compile("\\d\\d:\\d\\d");
     private static final Pattern hhmmssPattern = Pattern.compile("\\d\\d:\\d\\d:\\d\\d");
 
-    private static final DateTimeFormatter hhmmFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    public static final DateTimeFormatter hhmmFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter hhmmssFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     @Override

@@ -1,6 +1,7 @@
 package com.marvel.dingdangcat.service.impl;
 
 import com.marvel.dingdangcat.constant.DingTaskApplyStatusEnum;
+import com.marvel.dingdangcat.converter.StringToLocalTimeConverter;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApply;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
@@ -189,7 +190,7 @@ public class DingServiceImpl implements DingService {
         List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTask.getId());
         if (applyStaffList != null && applyStaffList.size() > 0) {
             Map<Long, String> usernameMap = userService.findAccountUsernameMap();
-            applyStringBuilder.append("当前报名人员：\n");
+            applyStringBuilder.append("\n当前报名人员：");
             for (int i = 0; i < applyStaffList.size(); i++) {
                 String username = usernameMap.getOrDefault(applyStaffList.get(i).getStaffId(), "");
                 String remark = applyStaffList.get(i).getRemark();
@@ -198,12 +199,14 @@ public class DingServiceImpl implements DingService {
                 } else {
                     remark = "";
                 }
-                applyStringBuilder.append(String.valueOf(i + 1)).append(". ").append(username).append(remark).append("\n");
+                applyStringBuilder.append("\n").append(String.valueOf(i + 1)).append(". ").append(username).append(remark);
             }
         }
 
         String description = dingTask.getDescription().replaceAll("\r\n", "\n");
-        String message = description + "\n报名链接：" + url + "\n" + applyStringBuilder.toString();
+        String applyTime = "\n报名时间：" + dingTask.getStartAt().format(StringToLocalTimeConverter.hhmmFormatter) + " ~ " + dingTask.getEndAt().format(StringToLocalTimeConverter.hhmmFormatter);
+
+        String message = description + applyTime + "\n报名链接：" + url + applyStringBuilder.toString();
         return message;
     }
 }
