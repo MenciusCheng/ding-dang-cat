@@ -184,7 +184,7 @@ public class DingServiceImpl implements DingService {
 
         StringBuilder applyStringBuilder = new StringBuilder();
         List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTask.getId());
-        if (applyStaffList != null) {
+        if (applyStaffList != null && applyStaffList.size() > 0) {
             Map<Long, String> usernameMap = userService.findAccountUsernameMap();
             applyStringBuilder.append("当前报名人员：\n");
             for (int i = 0; i < applyStaffList.size(); i++) {
