@@ -153,6 +153,8 @@ public class DingServiceImpl implements DingService {
             if (dingTaskApplyStaff != null) {
                 // 取消报名
                 dingTaskApplyStaffMapper.cancel(dingTaskApplyStaff.getId());
+                // 发送提醒
+                sendDingTalk(dingTaskId);
             }
         }
     }
