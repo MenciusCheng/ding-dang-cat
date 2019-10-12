@@ -43,8 +43,15 @@
 
 <script>
     $(function () {
+        $("#newPassword").on('input propertychange', function () {
+            if ($("#newPassword").val()) {
+                $("#newPasswordGroup").removeClass("has-error");
+            } else {
+                $("#newPasswordGroup").addClass("has-error");
+            }
+        });
         $("#confirmPassword").on('input propertychange', function () {
-            if ($("#newPassword").val() === $("#confirmPassword").val()) {
+            if ($("#confirmPassword").val() && $("#newPassword").val() === $("#confirmPassword").val()) {
                 $("#confirmPasswordGroup").removeClass("has-error");
             } else {
                 $("#confirmPasswordGroup").addClass("has-error");
@@ -65,8 +72,13 @@
 
     function validate() {
         var validated = true;
-        if ($("#newPassword").val() !== $("#confirmPassword").val()) {
+        if (!$("#newPassword").val()) {
             validated = false;
+            $("#newPasswordGroup").addClass("has-error");
+        }
+        if (!$("#confirmPassword").val() || $("#newPassword").val() !== $("#confirmPassword").val()) {
+            validated = false;
+            $("#confirmPasswordGroup").addClass("has-error");
         }
         return validated;
     }
