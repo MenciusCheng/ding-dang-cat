@@ -4,6 +4,7 @@ import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
 import com.marvel.dingdangcat.domain.user.Account;
 import com.marvel.dingdangcat.domain.view.*;
+import com.marvel.dingdangcat.exception.NotFoundException;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
 import org.slf4j.Logger;
@@ -61,6 +62,10 @@ public class DingViewController {
         Map<Long, String> usernameMap = userService.findAccountUsernameMap();
 
         DingTask dingTask = dingService.findDingTaskById(dingTaskId);
+        if (dingTask == null) {
+            throw new NotFoundException("DingTask Not Found");
+        }
+
         TDingTaskResponse dingTaskResponse = new TDingTaskResponse();
         BeanUtils.copyProperties(dingTask, dingTaskResponse);
         dingTaskResponse.setManagerName(usernameMap.getOrDefault(dingTaskResponse.getManagerId(), ""));

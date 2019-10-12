@@ -1,5 +1,6 @@
 package com.marvel.dingdangcat.controller.view;
 
+import com.marvel.dingdangcat.exception.NotFoundException;
 import com.marvel.dingdangcat.service.UserService;
 import org.apache.shiro.authc.AccountException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class ExceptionController {
         mv.addObject("page", "login");
         mv.addObject("errorMessage", ex.getMessage());
         mv.setViewName("user/login");
+        return mv;
+    }
+
+    /**
+     * 404 异常
+     */
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFoundException(Exception ex) {
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("title", "404");
+        mv.addObject("errorMessage", ex.getMessage());
+        mv.setViewName("common/notFound");
         return mv;
     }
 }
