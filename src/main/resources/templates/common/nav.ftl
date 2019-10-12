@@ -14,7 +14,7 @@
             </ul>
         </nav>
         <h3 class="text-muted">
-            <img src="../../assets/img/phone_cat.png" alt="phone_cat" height="32" width="32">
+            <img src="/assets/img/phone_cat.png" alt="phone_cat" height="32" width="32">
             <span>叮当猫</span>
         </h3>
     </div>

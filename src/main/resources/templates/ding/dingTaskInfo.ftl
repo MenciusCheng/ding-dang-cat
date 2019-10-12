@@ -75,7 +75,10 @@ ${item_index + 1}. ${item.staffName}<#if item.remark?length != 0 > 备注：${it
     <div class="row">
         <div class="col-xs-12 col-md-12">
                 <div class="panel panel-warning">
-                    <div class="panel-heading">今日报名人员</div>
+                    <div class="panel-heading">
+                        <span>今日报名人员</span>
+                        <a class="pull-right" href="/ding/dingTask/history/list?dingTaskId=${dingTask.id}" role="button">查看历史</a>
+                    </div>
                     <div class="list-group">
                         <#list applyStaffList as item>
                             <li class="list-group-item"><span>${item_index + 1}.</span><span class="<#if myApplyInfo?? && item.staffId == myApplyInfo.staffId>bold</#if>">${item.staffName}</span><#if item.remark?length != 0 > <span>备注：${item.remark}</span></#if></li>

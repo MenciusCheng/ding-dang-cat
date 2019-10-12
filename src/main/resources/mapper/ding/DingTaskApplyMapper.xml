@@ -34,4 +34,8 @@
     <select id="findByDingTaskIdAndApplyDate" resultMap="BaseResultMap">
         select * from ding_task_apply where `ding_task_id` = #{dingTaskId} AND `apply_date` = #{applyDate}
     </select>
+
+    <select id="findByDingTaskId" resultMap="BaseResultMap">
+        select * from ding_task_apply where `ding_task_id` = #{dingTaskId} order by `apply_date` desc
+    </select>
 </mapper>

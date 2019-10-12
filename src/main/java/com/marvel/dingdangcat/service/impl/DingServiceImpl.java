@@ -158,8 +158,18 @@ public class DingServiceImpl implements DingService {
     }
 
     @Override
-    public List<DingTaskApplyStaff> findDingTaskApplyStaffByDingTaskId(Long dingTaskId) {
-        DingTaskApply dingTaskApply = dingTaskApplyMapper.findByDingTaskIdAndApplyDate(dingTaskId, LocalDate.now());
+    public List<DingTaskApply> findDingTaskApplyByDingTaskId(Long dingTaskId) {
+        return dingTaskApplyMapper.findByDingTaskId(dingTaskId);
+    }
+
+    @Override
+    public List<DingTaskApplyStaff> findTodayDingTaskApplyStaffByDingTaskId(Long dingTaskId) {
+        return findDingTaskApplyStaffByDingTaskIdAndApplyDate(dingTaskId, LocalDate.now());
+    }
+
+    @Override
+    public List<DingTaskApplyStaff> findDingTaskApplyStaffByDingTaskIdAndApplyDate(Long dingTaskId, LocalDate applyDate) {
+        DingTaskApply dingTaskApply = dingTaskApplyMapper.findByDingTaskIdAndApplyDate(dingTaskId, applyDate);
         if (dingTaskApply != null) {
             return dingTaskApplyStaffMapper.findByDingTaskApplyId(dingTaskApply.getId());
         }
@@ -187,7 +197,7 @@ public class DingServiceImpl implements DingService {
         String url = domainName + api + dingTask.getId().toString();
 
         StringBuilder applyStringBuilder = new StringBuilder();
-        List<DingTaskApplyStaff> applyStaffList = findDingTaskApplyStaffByDingTaskId(dingTask.getId());
+        List<DingTaskApplyStaff> applyStaffList = findTodayDingTaskApplyStaffByDingTaskId(dingTask.getId());
         if (applyStaffList != null && applyStaffList.size() > 0) {
             Map<Long, String> usernameMap = userService.findAccountUsernameMap();
             applyStringBuilder.append("\n当前报名人员：");

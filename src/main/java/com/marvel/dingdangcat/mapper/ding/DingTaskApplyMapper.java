@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by Marvel on 2019/9/30.
@@ -21,4 +22,6 @@ public interface DingTaskApplyMapper {
     DingTaskApply findById(Long id);
 
     DingTaskApply findByDingTaskIdAndApplyDate(@Param("dingTaskId") Long dingTaskId, @Param("applyDate") LocalDate applyDate);
+
+    List<DingTaskApply> findByDingTaskId(Long dingTaskId);
 }
