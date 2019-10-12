@@ -12,6 +12,7 @@
                 <div class="panel-body">
                     <h4>叮当猫</h4>
                     <p>作者：Marvel Cheng</p>
+                    <p>开源地址：<a target="_blank" href="https://github.com/MenciusCheng/ding-dang-cat">https://github.com/MenciusCheng/ding-dang-cat</a></p>
                 </div>
             </div>
         </div>

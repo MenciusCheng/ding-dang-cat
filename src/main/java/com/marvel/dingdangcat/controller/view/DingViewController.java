@@ -47,7 +47,7 @@ public class DingViewController {
         List<DingTask> dingTaskList = dingService.findAllDingTask();
         modelMap.addAttribute("dingTaskList", dingTaskList);
 
-        modelMap.addAttribute("title", "钉钉报名任务");
+        modelMap.addAttribute("title", "报名列表");
         modelMap.addAttribute("page", "dingTask");
         userService.addLoginInfo(modelMap);
         return "ding/dingTaskList";
