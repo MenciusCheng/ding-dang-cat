@@ -47,7 +47,9 @@
 报名时间：${dingTask.startAt} ~ ${dingTask.endAt}
 报名链接：http://dingdangcat.menga.vip/ding/dingTask/info?dingTaskId=${dingTask.getId()}
 当前报名人员：
-<#list applyStaffList as item>${item_index + 1}. ${item.staffName}<#if item.remark?length != 0 > 备注：${item.remark}</#if></#list>"
+<#list applyStaffList as item>
+${item_index + 1}. ${item.staffName}<#if item.remark?length != 0 > 备注：${item.remark}</#if>
+</#list>"
                         >复制</a>
                         <#if account?? && (account.roles?seq_contains("管理员") || account.permissions?seq_contains("提醒所有任务") || (account.permissions?seq_contains("提醒任务") && (account.id == dingTask.managerId || account.id == dingTask.createdBy)))>
                             <a id="noticeButton" class="btn btn-info" href="javascript:void(0)" role="button">钉钉提醒</a>

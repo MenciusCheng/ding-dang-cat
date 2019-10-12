@@ -43,7 +43,7 @@
     </update>
 
     <select id="findById" resultMap="BaseResultMap">
-        select * from ding_task where id = #{id}
+        select * from ding_task where id = #{id} AND `deleted` = 0
     </select>
 
     <select id="findAll" resultMap="BaseResultMap">

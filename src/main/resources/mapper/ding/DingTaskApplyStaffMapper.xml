@@ -38,7 +38,7 @@
     </select>
 
     <select id="findByDingTaskApplyId" resultMap="BaseResultMap">
-        select * from ding_task_apply_staff where `cancelled` = 0 AND `ding_task_apply_id` = #{dingTaskApplyId}
+        select * from ding_task_apply_staff where `cancelled` = 0 AND `ding_task_apply_id` = #{dingTaskApplyId} order by `updated_at` asc
     </select>
 
     <select id="findByDingTaskApplyIdAndStaffId" resultMap="BaseResultMap">
