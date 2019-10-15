@@ -35,16 +35,13 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <span>历史报名</span>
+                        <a class="pull-right" href="/ding/dingTask/info?dingTaskId=${dingTask.id}" role="button">查看今天</a>
                     </div>
                     <div class="list-group">
                         <#list dingTaskApplies as item>
-                            <li class="list-group-item">
-                                <#if todayDate == item.applyDate>
-                                    <a href="/ding/dingTask/info?dingTaskId=${dingTask.id}">${item.applyDate}</a>
-                                <#else>
-                                    <a href="/ding/dingTask/history/info?dingTaskId=${dingTask.id}&applyDate=${item.applyDate}">${item.applyDate}</a>
-                                </#if>
-                            </li>
+                            <#if todayDate != item.applyDate>
+                                <li class="list-group-item"><a href="/ding/dingTask/history/info?dingTaskId=${dingTask.id}&applyDate=${item.applyDate}">${item.applyDate}</a></li>
+                            </#if>
                         </#list>
                         <#if dingTaskApplies?size == 0>
                             <li class="list-group-item">

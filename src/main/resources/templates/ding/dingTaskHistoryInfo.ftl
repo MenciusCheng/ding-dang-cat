@@ -34,7 +34,7 @@
         <div class="col-xs-12 col-md-12">
                 <div class="panel panel-warning">
                     <div class="panel-heading">
-                        <span>报名人员</span>
+                        <span>报名人员（${applyDate}）</span>
                         <a class="pull-right" href="/ding/dingTask/history/list?dingTaskId=${dingTask.id}" role="button">查看历史</a>
                     </div>
                     <div class="list-group">

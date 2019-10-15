@@ -200,6 +200,7 @@ public class DingViewController {
         dingTaskResponse.setCreatedByName(usernameMap.getOrDefault(dingTaskResponse.getCreatedBy(), ""));
         dingTaskResponse.setUpdatedByName(usernameMap.getOrDefault(dingTaskResponse.getUpdatedBy(), ""));
         modelMap.addAttribute("dingTask", dingTaskResponse);
+        modelMap.addAttribute("applyDate", applyDate);
 
         List<DingTaskApplyStaff> applyStaffList = dingService.findDingTaskApplyStaffByDingTaskIdAndApplyDate(dingTaskId, applyDate);
         List<DingTaskApplyStaffVo> applyStaffVofList = new ArrayList<>();
