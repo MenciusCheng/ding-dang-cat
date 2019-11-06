@@ -34,5 +34,5 @@ public interface DingService {
 
     List<DingTaskApplyStaff> findDingTaskApplyStaffByDingTaskIdAndApplyDate(Long dingTaskId, LocalDate applyDate);
 
-    boolean sendDingTalk(Long dingTaskId);
+    boolean containNoticeType(String noticeType, Integer value);
 }

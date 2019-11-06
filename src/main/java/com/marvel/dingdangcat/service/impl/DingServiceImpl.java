@@ -1,7 +1,7 @@
 package com.marvel.dingdangcat.service.impl;
 
 import com.marvel.dingdangcat.constant.DingTaskApplyStatusEnum;
-import com.marvel.dingdangcat.converter.StringToLocalTimeConverter;
+import com.marvel.dingdangcat.constant.DingTaskNoticeTypeEnum;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.domain.ding.DingTaskApply;
 import com.marvel.dingdangcat.domain.ding.DingTaskApplyStaff;
@@ -9,24 +9,25 @@ import com.marvel.dingdangcat.domain.view.ApplyDingTaskVo;
 import com.marvel.dingdangcat.domain.view.LoginInfoVo;
 import com.marvel.dingdangcat.domain.view.TDingTaskRequest;
 import com.marvel.dingdangcat.helper.DingHelper;
-import com.marvel.dingdangcat.helper.DingTalkHelper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskApplyStaffMapper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskMapper;
+import com.marvel.dingdangcat.service.DingMessageService;
 import com.marvel.dingdangcat.service.DingService;
 import com.marvel.dingdangcat.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marvel on 2019/9/30.
@@ -40,20 +41,20 @@ public class DingServiceImpl implements DingService {
     private final DingTaskApplyMapper dingTaskApplyMapper;
     private final DingTaskApplyStaffMapper dingTaskApplyStaffMapper;
     private final UserService userService;
-
-    @Value("${ding.domain.name}")
-    private String domainName;
+    private final DingMessageService dingMessageService;
 
     @Autowired
     public DingServiceImpl(
             DingTaskMapper dingTaskMapper,
             DingTaskApplyMapper dingTaskApplyMapper,
             DingTaskApplyStaffMapper dingTaskApplyStaffMapper,
-            UserService userService) {
+            UserService userService,
+            DingMessageService dingMessageService) {
         this.dingTaskMapper = dingTaskMapper;
         this.dingTaskApplyMapper = dingTaskApplyMapper;
         this.dingTaskApplyStaffMapper = dingTaskApplyStaffMapper;
         this.userService = userService;
+        this.dingMessageService = dingMessageService;
     }
 
     @Override
@@ -137,8 +138,10 @@ public class DingServiceImpl implements DingService {
                 dingTaskApplyStaffMapper.update(dingTaskApplyStaff);
             }
 
-            // 发送提醒
-            sendDingTalk(dingTaskId);
+            // 有报名时，发送提醒
+            if (containNoticeType(dingTask.getNoticeType(), DingTaskNoticeTypeEnum.APPLY.getValue())) {
+                dingMessageService.sendDingTalkWithApply(dingTaskId);
+            }
         }
     }
 
@@ -151,8 +154,11 @@ public class DingServiceImpl implements DingService {
             if (dingTaskApplyStaff != null) {
                 // 取消报名
                 dingTaskApplyStaffMapper.cancel(dingTaskApplyStaff.getId());
-                // 发送提醒
-                sendDingTalk(dingTaskId);
+                DingTask dingTask = dingTaskMapper.findById(dingTaskId);
+                // 有报名时，发送提醒
+                if (containNoticeType(dingTask.getNoticeType(), DingTaskNoticeTypeEnum.APPLY.getValue())) {
+                    dingMessageService.sendDingTalkWithApply(dingTaskId);
+                }
             }
         }
     }
@@ -177,46 +183,20 @@ public class DingServiceImpl implements DingService {
     }
 
     @Override
-    public boolean sendDingTalk(Long dingTaskId) {
-        DingTask dingTask = dingTaskMapper.findById(dingTaskId);
-
-        boolean isNotDoing = dingTask.getApplyStatus() != DingTaskApplyStatusEnum.DOING.getValue();
-        boolean isEmptyDescription = dingTask.getDescription() == null || dingTask.getDescription().length() == 0;
-        boolean isEmptyDingWebhook = dingTask.getDingWebhook() == null || dingTask.getDingWebhook().length() == 0;
-
-        if (isNotDoing || isEmptyDescription || isEmptyDingWebhook) {
-            return false;
-        }
-
-        DingTalkHelper.sendText(dingTask.getDingWebhook(), getDingTaskMessage(dingTask));
-        return true;
+    public boolean containNoticeType(String noticeType, Integer value) {
+        List<Integer> noticeTypeList = getNoticeTypeList(noticeType);
+        return noticeTypeList.contains(value);
     }
 
-    private String getDingTaskMessage(DingTask dingTask) {
-        String api = "/ding/dingTask/info?dingTaskId=";
-        String url = domainName + api + dingTask.getId().toString();
-
-        StringBuilder applyStringBuilder = new StringBuilder();
-        List<DingTaskApplyStaff> applyStaffList = findTodayDingTaskApplyStaffByDingTaskId(dingTask.getId());
-        if (applyStaffList != null && applyStaffList.size() > 0) {
-            Map<Long, String> usernameMap = userService.findAccountUsernameMap();
-            applyStringBuilder.append("\n当前报名人员：");
-            for (int i = 0; i < applyStaffList.size(); i++) {
-                String username = usernameMap.getOrDefault(applyStaffList.get(i).getStaffId(), "");
-                String remark = applyStaffList.get(i).getRemark();
-                if (remark != null && remark.length() > 0) {
-                    remark = " 备注：" + remark;
-                } else {
-                    remark = "";
-                }
-                applyStringBuilder.append("\n").append(String.valueOf(i + 1)).append(". ").append(username).append(remark);
-            }
+    /**
+     * 提醒类型转为列表
+     */
+    private List<Integer> getNoticeTypeList(String noticeType) {
+        if (noticeType != null && noticeType.length() > 0) {
+            String[] split = noticeType.split(",");
+            return Arrays.stream(split).map(Integer::valueOf).collect(Collectors.toList());
         }
-
-        String description = dingTask.getDescription().replaceAll("\r\n", "\n");
-        String applyTime = "\n报名时间：" + dingTask.getStartAt().format(StringToLocalTimeConverter.hhmmFormatter) + " ~ " + dingTask.getEndAt().format(StringToLocalTimeConverter.hhmmFormatter);
-
-        String message = description + applyTime + "\n报名链接：" + url + applyStringBuilder.toString();
-        return message;
+        return new ArrayList<>();
     }
+
 }

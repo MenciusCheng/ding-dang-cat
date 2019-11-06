@@ -1,10 +1,12 @@
 package com.marvel.dingdangcat.task;
 
 import com.marvel.dingdangcat.constant.DingTaskApplyStatusEnum;
+import com.marvel.dingdangcat.constant.DingTaskNoticeTypeEnum;
 import com.marvel.dingdangcat.constant.DingTaskRepeatTypeEnum;
 import com.marvel.dingdangcat.domain.ding.DingTask;
 import com.marvel.dingdangcat.helper.DingHelper;
 import com.marvel.dingdangcat.mapper.ding.DingTaskMapper;
+import com.marvel.dingdangcat.service.DingMessageService;
 import com.marvel.dingdangcat.service.DingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +30,13 @@ public class DingTaskScheduler {
 
     private final DingService dingService;
     private final DingTaskMapper dingTaskMapper;
+    private final DingMessageService dingMessageService;
 
     @Autowired
-    public DingTaskScheduler(DingService dingService, DingTaskMapper dingTaskMapper) {
+    public DingTaskScheduler(DingService dingService, DingTaskMapper dingTaskMapper, DingMessageService dingMessageService) {
         this.dingService = dingService;
         this.dingTaskMapper = dingTaskMapper;
+        this.dingMessageService = dingMessageService;
     }
 
     @Scheduled(cron = "0 0/1 * * * ?")
@@ -90,11 +94,23 @@ public class DingTaskScheduler {
             dingTaskMapper.updateApplyStatusByIds(doingDingTaskIds, DingTaskApplyStatusEnum.DOING.getValue());
             // 通过定时器变为进行中时，发送钉钉提醒
             for (Long dingTaskId : doingDingTaskIds) {
-                dingService.sendDingTalk(dingTaskId);
+                DingTask dingTask = dingTaskMapper.findById(dingTaskId);
+                // 开始时，发送提醒
+                if (dingService.containNoticeType(dingTask.getNoticeType(), DingTaskNoticeTypeEnum.START.getValue())) {
+                    dingMessageService.sendDingTalk(dingTaskId);
+                }
             }
         }
         if (!overDingTaskIds.isEmpty()) {
             dingTaskMapper.updateApplyStatusByIds(overDingTaskIds, DingTaskApplyStatusEnum.OVER.getValue());
+            // 通过定时器变为已结束时，发送钉钉提醒
+            for (Long dingTaskId : overDingTaskIds) {
+                DingTask dingTask = dingTaskMapper.findById(dingTaskId);
+                // 结束时，发送提醒
+                if (dingService.containNoticeType(dingTask.getNoticeType(), DingTaskNoticeTypeEnum.CLOSE.getValue())) {
+                    dingMessageService.sendCloseDingTalk(dingTaskId);
+                }
+            }
         }
         if (!notTodayDingTaskIds.isEmpty()) {
             dingTaskMapper.updateApplyStatusByIds(notTodayDingTaskIds, DingTaskApplyStatusEnum.NOT_STARTED.getValue());
@@ -103,6 +119,17 @@ public class DingTaskScheduler {
         // 关闭启用
         if (!overOnceDingTaskIds.isEmpty()) {
             dingTaskMapper.updateEnabledByIds(overOnceDingTaskIds, 0);
+        }
+
+        // 整点提醒
+        if (now.getMinute() == 0) {
+            List<DingTask> doingDingTasks = enabledDingTasks.stream().filter(dt -> dt.getApplyStatus() != DingTaskApplyStatusEnum.NOT_STARTED.getValue()).collect(Collectors.toList());
+            for (DingTask dingTask : doingDingTasks) {
+                // 整点时，发送提醒
+                if (dingService.containNoticeType(dingTask.getNoticeType(), DingTaskNoticeTypeEnum.WHOLE.getValue())) {
+                    dingMessageService.sendDingTalk(dingTask.getId());
+                }
+            }
         }
 
         // TODO 状态因定时更新为已结束，且有人报名时，更新报名父表为已完成。

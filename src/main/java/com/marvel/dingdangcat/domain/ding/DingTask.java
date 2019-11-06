@@ -61,6 +61,11 @@ public class DingTask {
     private String dingWebhook;
 
     /**
+     * 提醒类型（多选，逗号分隔），1: 开始时; 2:有报名时; 3:每隔30分钟; 4: 结束时;
+     */
+    private String noticeType;
+
+    /**
      * 是否删除，0: 否; 1: 是;
      */
     private Integer deleted;

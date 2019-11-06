@@ -1,7 +1,6 @@
 package com.marvel.dingdangcat.controller.api;
 
-import com.marvel.dingdangcat.service.DingService;
-import com.marvel.dingdangcat.service.UserService;
+import com.marvel.dingdangcat.service.DingMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +17,16 @@ public class DingApiController {
 
     private final Logger logger = LoggerFactory.getLogger(DingApiController.class);
 
-    private final UserService userService;
-    private final DingService dingService;
+    private final DingMessageService dingMessageService;
 
     @Autowired
-    public DingApiController(UserService userService, DingService dingService) {
-        this.userService = userService;
-        this.dingService = dingService;
+    public DingApiController(DingMessageService dingMessageService) {
+        this.dingMessageService = dingMessageService;
     }
 
     @GetMapping("/noticeDingTalk")
     public String noticeDingTalk(Long dingTaskId) {
-        if (dingService.sendDingTalk(dingTaskId)) {
+        if (dingMessageService.sendDingTalk(dingTaskId)) {
             return "success";
         }
         return "failure";
