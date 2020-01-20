@@ -1,8 +1,10 @@
 package com.marvel.dingdangcat.helper;
 
+import com.marvel.dingdangcat.DingDangCatApplication;
 import com.marvel.dingdangcat.constant.DingTaskApplyStatusEnum;
 import com.marvel.dingdangcat.constant.DingTaskRepeatTypeEnum;
 import com.marvel.dingdangcat.domain.ding.DingTask;
+import com.marvel.dingdangcat.service.HolidayService;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -51,7 +53,8 @@ public class DingHelper {
     }
 
     private static boolean isWorkday(LocalDate localDate) {
-        return localDate.getDayOfWeek().getValue() >= DayOfWeek.MONDAY.getValue() && localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue();
+        HolidayService holidayService = DingDangCatApplication.getApplicationContext().getBean(HolidayService.class);
+        return holidayService.isWorkday(localDate);
     }
 
     private static boolean isFriday(LocalDate localDate) {
