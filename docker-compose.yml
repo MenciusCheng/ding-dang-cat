@@ -1,0 +1,10 @@
+version: "3"
+services:
+  dingdangcat:
+    container_name: dingdangcat
+    build: .
+    volumes:
+      - "./xx/application.properties:/app/application.properties"
+      - "./log:/app/log"
+    ports:
+      - "9380:9380"
