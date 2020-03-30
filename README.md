@@ -7,7 +7,12 @@
 - 修改 application.properties, 修改数据库配置。
 - 然后启动 DingDangCatApplication。
 
-## Docker 启动
+## nohup 方式部署
+
+- 修改 xx/application.properties
+- 执行 xx/startup.sh
+
+## Docker 方式部署
 
 - 修改 xx/application.properties
 - 执行 `docker-compose up -d`
