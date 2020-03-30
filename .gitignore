@@ -25,4 +25,5 @@
 /.nb-gradle/
 
 /log/*
+/xx/log/*
 /xx/application.properties
